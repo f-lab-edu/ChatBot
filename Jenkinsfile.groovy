@@ -39,7 +39,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'nohup java -jar build/fire_inform-0.0.1-SNAPSHOT.jar &'
+                sh 'sudo nohup java -jar build/fire_inform-0.0.1-SNAPSHOT.jar &'
             }
         }
     }
