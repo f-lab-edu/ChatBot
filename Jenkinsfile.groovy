@@ -19,15 +19,21 @@ pipeline {
         }
 
         stage('Build') {
-            echo "Build"
+            steps {
+                echo "Build"
+            }
         }
 
         stage('Transfer') {
-            echo "Transfer"
+            steps {
+                echo "Transfer"
+            }
         }
 
         stage('Run') {
-            echo "Run"
+            steps {
+                echo "Run"
+            }
         }
     }
 }
