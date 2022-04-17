@@ -17,17 +17,17 @@ pipeline {
                 credentialsId: 'cbf50f14-c18f-4bc0-a792-668780641040'
             }
         }
-    }
 
-    stage('Build') {
-        echo "Build"
-    }
+        stage('Build') {
+            echo "Build"
+        }
 
-    stage('Transfer') {
-        echo "Transfer"
-    }
+        stage('Transfer') {
+            echo "Transfer"
+        }
 
-    stage('Run') {
-        echo "Run"
+        stage('Run') {
+            echo "Run"
+        }
     }
 }
