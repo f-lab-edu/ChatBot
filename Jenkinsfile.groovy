@@ -26,14 +26,14 @@ pipeline {
 
         stage('Transfer') {
             steps {
-                echo "Transfer"
+                sh "scp -p 12308 /var/lib/jenkins/workspace/flab/build/libs/fire_inform-0.0.1-SNAPSHOT.jar root@106.10.59.248:/build/fire-inform.jar"
             }
         }
 
-        stage('Run') {
-            steps {
-                echo "Run"
-            }
-        }
+//         stage('Connect Deploy Server') {
+//             steps {
+//                 sh "ssh -p 12308 root@106.10.59.248"
+//             }
+//         }
     }
 }
