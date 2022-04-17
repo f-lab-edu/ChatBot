@@ -26,7 +26,7 @@ pipeline {
 
         stage('Transfer') {
             steps {
-                sh "sudo sshpass -p Jhd680110! scp -P 12308 /var/lib/jenkins/workspace/flab/build/libs/fire_inform-0.0.1-SNAPSHOT.jar root@106.10.59.248:build"
+                sh "sshpass -p Jhd680110! scp -P 12308 /var/lib/jenkins/workspace/flab/build/libs/fire_inform-0.0.1-SNAPSHOT.jar root@106.10.59.248:build"
             }
         }
 
