@@ -10,6 +10,10 @@ pipeline {
 //     }
 
     agent any
+    environment {
+        SERVER_PASSWORD = credentials('serverPassword')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -26,14 +30,14 @@ pipeline {
 
         stage('Transfer') {
             steps {
-                sh "sshpass -p Jhd680110! scp -P 12308 -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/flab/build/libs/fire_inform-0.0.1-SNAPSHOT.jar root@106.10.59.248:build"
+                sh "sshpass -p $SERVER_PASSWORD scp -P 12308 -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/flab/build/libs/fire_inform-0.0.1-SNAPSHOT.jar root@106.10.59.248:build"
             }
         }
 
-//         stage('Connect Deploy Server') {
-//             steps {
-//                 sh "ssh -p 12308 root@106.10.59.248"
-//             }
-//         }
+        stage('Connect Deploy Server') {
+            steps {
+                sh "ssh -p 12308 root@106.10.59.248"
+            }
+        }
     }
 }
