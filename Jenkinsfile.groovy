@@ -28,8 +28,9 @@ pipeline {
         stage('Connect Deploy Server') {
             steps {
                 sh 'sshpass -p $DEPLOY_SERVER_PASSWORD ssh -T -p 12308 $DEPLOY_SERVER_ID@106.10.59.248'
-                sh 'sudo pkill -9 -ef build/fire_inform-0.0.1-SNAPSHOT.jar'
-                sh 'sleep 10'
+                su 'pwd'
+                sh 'sudo kill -9 $CURRENT_PID"'
+                su 'pwd'
                 sh 'sudo nohup java -jar build/fire_inform-0.0.1-SNAPSHOT.jar &'
             }
         }
