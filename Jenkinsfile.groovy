@@ -25,10 +25,10 @@ pipeline {
             }
         }
 
-        stage('Connect Deploy Server') {
-            steps {
-                sh "ssh -p 12308 root@106.10.59.248"
-            }
-        }
+//         stage('Connect Deploy Server') {
+//             steps {
+//                 sh "ssh -p 12308 root@106.10.59.248"
+//             }
+//         }
     }
 }
