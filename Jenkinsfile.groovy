@@ -33,7 +33,7 @@ pipeline {
 
         stage('Kill Previous Process') {
             steps {
-                sh 'pkill -9 -ef "java -jar build/fire_inform-0.0.1-SNAPSHOT.jar"'
+                sh 'pkill -9 -f "java -jar build/fire_inform-0.0.1-SNAPSHOT.jar"'
             }
         }
 
