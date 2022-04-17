@@ -33,13 +33,13 @@ pipeline {
 
         stage('Kill Previous Process') {
             steps {
-                sh 'pkill -9 -ef "build/fire_inform-0.0.1-SNAPSHOT.jar"'
+                sh 'pkill -9 -ef build/fire_inform-0.0.1-SNAPSHOT.jar'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'sudo nohup java -jar build/fire_inform-0.0.1-SNAPSHOT.jar &'
+                sh 'nohup java -jar build/fire_inform-0.0.1-SNAPSHOT.jar &'
             }
         }
     }
