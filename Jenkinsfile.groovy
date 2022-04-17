@@ -26,7 +26,7 @@ pipeline {
 
         stage('Transfer') {
             steps {
-                sh "sshpass -p Jhd680110! scp -P 12308 /var/lib/jenkins/workspace/flab/build/libs/fire_inform-0.0.1-SNAPSHOT.jar root@106.10.59.248:build -o StrictHostKeyChecking=no"
+                sh "sshpass -p Jhd680110! scp -P 12308 -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/flab/build/libs/fire_inform-0.0.1-SNAPSHOT.jar root@106.10.59.248:build"
             }
         }
 
