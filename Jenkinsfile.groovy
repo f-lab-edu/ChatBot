@@ -25,10 +25,11 @@ pipeline {
             }
         }
 
-//         stage('Connect Deploy Server') {
-//             steps {
-//                 sh "ssh -p 12308 root@106.10.59.248"
-//             }
-//         }
+        stage('Connect Deploy Server') {
+            steps {
+                sh 'sshpass -p $DEPLOY_SERVER_PASSWORD ssh -p 12308 $DEPLOY_SERVER_ID@106.10.59.248'
+                sh 'nohup java -jar build/fire_inform-0.0.1-SNAPSHOT.jar &'
+            }
+        }
     }
 }
