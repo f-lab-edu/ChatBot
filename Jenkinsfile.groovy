@@ -1,7 +1,8 @@
 pipeline {
     agent any
     environment {
-        SERVER_PASSWORD = credentials('serverPassword')
+        DEPLOY_SERVER_ID = credentials('deployServerId')
+        DEPLOY_SERVER_PASSWORD = credentials('deployServerPassword')
     }
 
     stages {
@@ -20,8 +21,7 @@ pipeline {
 
         stage('Transfer') {
             steps {
-                echo '$SERVER_PASSWORD'
-                sh 'sshpass -p $SERVER_PASSWORD scp -P 12308 -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/flab/build/libs/fire_inform-0.0.1-SNAPSHOT.jar root@106.10.59.248:build'
+                sh 'sshpass -p $DEPLOY_SERVER_PASSWORD scp -P 12308 -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/flab/build/libs/fire_inform-0.0.1-SNAPSHOT.jar $DEPLOY_SERVER_ID@106.10.59.248:build'
             }
         }
 
