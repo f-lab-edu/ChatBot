@@ -33,12 +33,12 @@ pipeline {
                 }
                 sh 'echo $previousPid'
 
-                echo "MYVAR: $env.MYVAR"
-                if('$PREVIOUS_PID' != null) {
-                    sh 'pkill -9 -ef build/fire_inform-0.0.1-SNAPSHOT.jar'
-                    sh 'sleep 5'
-                }
-                sh 'nohup java -jar build/fire_inform-0.0.1-SNAPSHOT.jar &'
+//                 echo "MYVAR: $env.MYVAR"
+//                 if('$PREVIOUS_PID' != null) {
+//                     sh 'pkill -9 -ef build/fire_inform-0.0.1-SNAPSHOT.jar'
+//                     sh 'sleep 5'
+//                 }
+//                 sh 'nohup java -jar build/fire_inform-0.0.1-SNAPSHOT.jar &'
             }
         }
     }
