@@ -6,18 +6,18 @@ pipeline {
     }
 
     stages {
-//         stage('Checkout') {
-//             steps {
-//                 git url: 'https://github.com/f-lab-edu/Fire-inform', branch: 'main',
-//                 credentialsId: 'cbf50f14-c18f-4bc0-a792-668780641040'
-//             }
-//         }
-//
-//         stage('Build') {
-//             steps {
-//                 sh "./gradlew clean build"
-//             }
-//         }
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/f-lab-edu/Fire-inform', branch: 'main',
+                credentialsId: 'cbf50f14-c18f-4bc0-a792-668780641040'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh "./gradlew clean build"
+            }
+        }
 
         stage('Send Jar') {
             steps {
