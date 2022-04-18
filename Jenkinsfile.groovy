@@ -6,6 +6,12 @@ pipeline {
     }
 
     stages {
+        stage('Clean Up') {
+            steps {
+                sh 'rm -rf *'
+            }
+        }
+
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/f-lab-edu/Fire-inform', branch: 'jenkins',
@@ -13,28 +19,28 @@ pipeline {
             }
         }
 
-//         stage('Build') {
-//             steps {
-//                 sh "./gradlew clean build"
-//             }
-//         }
-//
-//         stage('Send Jar') {
-//             steps {
-//                 sh 'sshpass -p $DEPLOY_SERVER_PASSWORD scp -P 12308 -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/flab/build/libs/fire_inform-0.0.1-SNAPSHOT.jar $DEPLOY_SERVER_ID@106.10.59.248:build'
-//             }
-//         }
-//
-//         stage('Send Shell Script') {
-//             steps {
-//                 sh 'sshpass -p $DEPLOY_SERVER_PASSWORD scp -P 12308 -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/flab/deploy.sh $DEPLOY_SERVER_ID@106.10.59.248:build'
-//             }
-//         }
-//
-//         stage('Connect Deploy Server') {
-//             steps {
-//                 sh 'sshpass -p $DEPLOY_SERVER_PASSWORD ssh -T -p 12308 $DEPLOY_SERVER_ID@106.10.59.248 sh build/deploy.sh'
-//             }
-//         }
+        stage('Build') {
+            steps {
+                sh "./gradlew clean build"
+            }
+        }
+
+        stage('Send Jar') {
+            steps {
+                sh 'sshpass -p $DEPLOY_SERVER_PASSWORD scp -P 12308 -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/flab/build/libs/fire_inform-0.0.1-SNAPSHOT.jar $DEPLOY_SERVER_ID@106.10.59.248:build'
+            }
+        }
+
+        stage('Send Shell Script') {
+            steps {
+                sh 'sshpass -p $DEPLOY_SERVER_PASSWORD scp -P 12308 -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/flab/deploy.sh $DEPLOY_SERVER_ID@106.10.59.248:build'
+            }
+        }
+
+        stage('Connect Deploy Server') {
+            steps {
+                sh 'sshpass -p $DEPLOY_SERVER_PASSWORD ssh -T -p 12308 $DEPLOY_SERVER_ID@106.10.59.248 sh build/deploy.sh'
+            }
+        }
     }
 }
