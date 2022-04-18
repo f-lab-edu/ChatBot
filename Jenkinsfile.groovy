@@ -14,7 +14,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/f-lab-edu/Fire-inform', branch: 'jenkins',
+                git url: 'https://github.com/f-lab-edu/Fire-inform',
                 credentialsId: 'cbf50f14-c18f-4bc0-a792-668780641040'
             }
         }
