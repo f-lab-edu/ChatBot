@@ -27,12 +27,14 @@ pipeline {
 
         stage('Send Jar') {
             steps {
+                sh 'sshpass -p $DEPLOY_SERVER_PASSWORD ssh -T -p 12308 $DEPLOY_SERVER_ID@106.10.59.248 rm -rf build/fire_inform-0.0.1-SNAPSHOT.jar'
                 sh 'sshpass -p $DEPLOY_SERVER_PASSWORD scp -P 12308 -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/pipeline/build/libs/fire_inform-0.0.1-SNAPSHOT.jar $DEPLOY_SERVER_ID@106.10.59.248:build'
             }
         }
 
         stage('Send Shell Script') {
             steps {
+                sh 'sshpass -p $DEPLOY_SERVER_PASSWORD ssh -T -p 12308 $DEPLOY_SERVER_ID@106.10.59.248 rm -rf build/deploy.sh'
                 sh 'sshpass -p $DEPLOY_SERVER_PASSWORD scp -P 12308 -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/pipeline/deploy.sh $DEPLOY_SERVER_ID@106.10.59.248:build'
             }
         }
