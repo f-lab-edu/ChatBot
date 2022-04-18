@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if $( pgrep -f java ); then
+if pgrep -f java; then
     kill -9 $pid;
     echo '$pid process kill complete'
 else
