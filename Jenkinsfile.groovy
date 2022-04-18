@@ -19,7 +19,7 @@ pipeline {
 //             }
 //         }
 
-//         stage('Transfer Jar') {
+//         stage('Send Jar') {
 //             steps {
 //                 sh 'sshpass -p $DEPLOY_SERVER_PASSWORD scp -P 12308 -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/flab/build/libs/fire_inform-0.0.1-SNAPSHOT.jar $DEPLOY_SERVER_ID@106.10.59.248:build'
 //             }
@@ -29,6 +29,7 @@ pipeline {
             steps {
                 sh 'sshpass -p $DEPLOY_SERVER_PASSWORD ssh -T -p 12308 $DEPLOY_SERVER_ID@106.10.59.248'
 
+                sh 'pwd'
                 sh 'kill -9 "pgrep -f java"'
                 sh 'sleep 5'
                 sh 'nohup java -jar build/fire_inform-0.0.1-SNAPSHOT.jar &'
