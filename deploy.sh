@@ -2,13 +2,13 @@
 
 pwd
 
-pid="$(pgrep -f java)";
+pid='$(pgrep -f java)';
 
-if [ '$pid' != ""]; then
+if [ '$pid' != '']; then
     kill -9 $pid;
-    echo "$pid process kill complete"
+    echo '$pid process kill complete'
 else
-    echo "pid is empty"
+    echo 'pid is empty'
 fi
 
 sleep 5
