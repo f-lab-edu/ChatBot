@@ -22,3 +22,10 @@
 
 ## ERD
 <img width="643" alt="스크린샷 2022-04-22 오후 8 33 53" src="https://user-images.githubusercontent.com/66231761/164706891-254ff205-9bac-4d59-b595-8228d9084c58.png">
+
+## 프로토타입
+카카오 오븐 : https://ovenapp.io/view/oIYUM4y1KXoTTDx7U9TJhvqdNgQ71ukq/I38Ax
+<img width="1102" alt="스크린샷 2022-04-23 오전 10 16 49" src="https://user-images.githubusercontent.com/78134917/164850530-39cee2fb-50bb-4248-8ae4-d92edfc2f80c.png">
+
+
+
