@@ -1,4 +1,4 @@
-package com.flab.fire_inform.config;
+package com.flab.fire_inform.global.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 
 @Slf4j
 @Configuration
-@MapperScan(basePackages = "com.flab.fire_inform.mapper")
+@MapperScan(basePackages = "com.flab.fire_inform.domains.*.mapper")
 public class MybatisConfig {
     @Value("${spring.datasource.driver-class-name}")
     private String driverClassName;
@@ -48,7 +48,7 @@ public class MybatisConfig {
         factoryBean.setDataSource(datasource);
         factoryBean.setConfigLocation(resolver.getResource("mybatis-config.xml"));
         // factoryBean.setMapperLocations(resolver.getResources("mappers/*.xml"));
-        factoryBean.setMapperLocations(resolver.getResources("classpath*:mappers/*.xml"));
+        factoryBean.setMapperLocations(resolver.getResources("mappers/*/*.xml"));
         factoryBean.setTypeAliasesPackage("com.flab.fire_inform.entity");
         return factoryBean.getObject();
     }
