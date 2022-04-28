@@ -3,10 +3,12 @@ package com.flab.fire_inform.domains.member.controller;
 
 import com.flab.fire_inform.domains.member.dto.JoinRequest;
 import com.flab.fire_inform.domains.member.dto.LoginRequest;
+import com.flab.fire_inform.domains.member.mapper.MemberMapper;
 import com.flab.fire_inform.domains.member.service.MemberService;
 import com.flab.fire_inform.global.exception.CustomException;
 import com.flab.fire_inform.global.exception.error.ErrorCode;
 import com.flab.fire_inform.global.security.JwtProvider;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +25,12 @@ public class MemberController {
 
     private final MemberService memberService;
     private final JwtProvider jwtProvider;
+    private final MemberMapper memberMapper;
 
-    public MemberController(MemberService memberService, JwtProvider jwtProvider){
+    public MemberController(MemberService memberService, JwtProvider jwtProvider, MemberMapper memberMapper){
         this.memberService = memberService;
         this.jwtProvider = jwtProvider;
+        this.memberMapper = memberMapper;
     }
 
     // 로그인
@@ -45,8 +49,13 @@ public class MemberController {
     //로그아웃
     @PostMapping("/logout")
     public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response){
+
+        Claims claims = jwtProvider.getInformation(request.getHeader("ACCESS_TOKEN"));
         response.setHeader("ACCESS_TOKEN","");
-        return new ResponseEntity(HttpStatus.OK);
+
+        memberMapper.insertLogoutTime((String)claims.get("id"));
+
+        return new ResponseEntity("로그아웃 되었습니다.",HttpStatus.OK);
     }
 
     //회원가입

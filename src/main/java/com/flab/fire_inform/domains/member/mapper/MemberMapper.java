@@ -12,4 +12,8 @@ public interface MemberMapper {
     int join(JoinRequest joinRequest);
 
     boolean checkId(String id);
+
+    int insertLoginTime(String id);
+
+    int insertLogoutTime(String id);
 }
