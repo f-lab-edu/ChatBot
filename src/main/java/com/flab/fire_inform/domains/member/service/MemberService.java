@@ -20,10 +20,12 @@ public class MemberService {
 
     public void login(LoginRequest loginRequest){
 
+        log.info("[MemberMapper] :::: ========= loginRequest  = " + loginRequest);
+
         if(!memberMapper.login(loginRequest)){
             throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
         }
-
+        memberMapper.insertLoginTime(loginRequest.getId());
     }
 
     public void join(JoinRequest joinRequest){

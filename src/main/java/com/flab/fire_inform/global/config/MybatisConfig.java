@@ -47,7 +47,6 @@ public class MybatisConfig {
 
         factoryBean.setDataSource(datasource);
         factoryBean.setConfigLocation(resolver.getResource("mybatis-config.xml"));
-        // factoryBean.setMapperLocations(resolver.getResources("mappers/*.xml"));
         factoryBean.setMapperLocations(resolver.getResources("mappers/*/*.xml"));
         factoryBean.setTypeAliasesPackage("com.flab.fire_inform.entity");
         return factoryBean.getObject();
