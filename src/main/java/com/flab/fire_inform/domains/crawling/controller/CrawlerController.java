@@ -1,11 +1,9 @@
 package com.flab.fire_inform.domains.crawling.controller;
 
-import com.flab.fire_inform.domains.crawling.entity.Recruit;
 import com.flab.fire_inform.domains.crawling.util.JobCrawler;
+import com.flab.fire_inform.global.common.SuccessResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public class CrawlerController {
@@ -17,10 +15,10 @@ public class CrawlerController {
     }
 
     @PostMapping("/crawling")
-    public String crawling() {
-        List<Recruit> recruits = jobCrawler.crawling();
+    public SuccessResponse<String> crawling() {
+        jobCrawler.crawling();
 
-        return "ok";
+        return SuccessResponse.success("Crawling Done");
     }
 
 }
