@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flab.fire_inform.domains.member.mapper.MemberMapper">
+    <select id="login" parameterType="com.flab.fire_inform.domains.member.dto.LoginRequest" resultType="Boolean">
+       SELECT EXISTS
+            (
+            SELECT *
+            FROM MEMBERS
+            WHERE login_id = '${id}'
+            AND password = '${password}'
+            )
+   </select>
+
+    <select id="checkId" resultType="Boolean" parameterType="String">
+        SELECT EXISTS
+        (
+        SELECT login_id
+        FROM MEMBERS
+        WHERE login_id = '${id}'
+        )
+    </select>
+
+
+    <insert id="join" parameterType="com.flab.fire_inform.domains.member.dto.JoinRequest">
+        INSERT INTO MEMBERS (login_id, `password`, phone_number) VALUES
+        (
+        '${id}'
+        , '${password}'
+        , '${phoneNumber}'
+        )
+
+    </insert>
+
+    <insert id="insertLoginTime" parameterType="String">
+        INSERT INTO MEMBER_HISTORY (login_id, login_date) VALUES
+        (
+        '${id}'
+        , sysdate()
+        )
+    </insert>
+
+    <insert id="insertLogoutTime" parameterType="String">
+        INSERT INTO MEMBER_HISTORY (login_id, logout_date) VALUES
+        (
+        '${id}'
+        , sysdate()
+        )
+    </insert>
+
+
+</mapper>
