@@ -23,6 +23,8 @@ public class LoginInterceptorConfiguration extends WebMvcConfigurationSupport {
         registry.addInterceptor(loginTokenHandler)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login")
-                .excludePathPatterns("/join");
+                .excludePathPatterns("/join")
+                .excludePathPatterns("/newsList")
+                .excludePathPatterns("/newsList/*");
     }
 }
