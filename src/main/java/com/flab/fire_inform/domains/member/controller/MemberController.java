@@ -53,7 +53,7 @@ public class MemberController {
        response.setHeader("REFRESH_TOKEN_KEY",loginRequest.getId());
 
        // 아직 세션에 저장이 안된다. 연결된 것 확인 20225월1일
-       session.setAttribute(loginRequest.getId(),refreshToken);
+       //session.setAttribute(loginRequest.getId(),refreshToken);
 
        return new ResponseEntity(HttpStatus.OK);
     }
