@@ -8,7 +8,13 @@ import java.util.List;
 @Mapper
 public interface RecruitMapper {
 
+    Recruit findById(Long id);
+
     List<Recruit> findByCompany(String company);
 
     void save(Recruit recruit);
+
+    void deleteById(Long id);
+
+    void update(Recruit recruit);
 }

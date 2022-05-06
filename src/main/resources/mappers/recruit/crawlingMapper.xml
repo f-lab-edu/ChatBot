@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flab.fire_inform.domains.crawling.mapper.RecruitMapper">
+    <select id="findById" parameterType="Long" resultType="recruit">
+        SELECT
+        *
+        FROM
+        recruit
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="findByCompany" parameterType="String" resultType="recruit">
+        SELECT
+        *
+        FROM
+        recruit
+        WHERE
+        company = #{company}
+    </select>
+
+    <insert id="save" parameterType="recruit" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        recruit(
+        title
+        , career
+        , due_date
+        , company
+        , address
+        , worker_type
+        , link
+        , add_date_time
+        , update_date_time
+        )
+        VALUES(
+        #{title}
+        , #{career}
+        , #{dueDate}
+        , #{company}
+        , #{address}
+        , #{workerType}
+        , #{link}
+        , #{addDateTime}
+        , #{updateDateTime}
+        )
+    </insert>
+
+    <delete id="deleteById" parameterType="Long">
+        DELETE FROM
+        recruit
+        WHERE
+        id = #{id}
+    </delete>
+
+    <update id="update" parameterType="recruit" useGeneratedKeys="true" keyProperty="id">
+        UPDATE
+        recruit
+        set
+        title = #{title}
+        , career = #{career}
+        , due_date = #{dueDate}
+        , company = #{company}
+        , address = #{address}
+        , worker_type = #{workerType}
+        , link = #{link}
+        , update_date_time = #{updateDateTime}
+        WHERE
+        id = #{id}
+    </update>
+</mapper>
