@@ -4,68 +4,68 @@
 <mapper namespace="com.flab.fire_inform.domains.crawling.mapper.RecruitMapper">
     <select id="findById" parameterType="Long" resultType="recruit">
         SELECT
-        *
+            *
         FROM
-        recruit
+            recruit
         WHERE
-        id = #{id}
+            id = #{id}
     </select>
 
     <select id="findByCompany" parameterType="String" resultType="recruit">
         SELECT
-        *
+            *
         FROM
-        recruit
+            recruit
         WHERE
-        company = #{company}
+            company = #{company}
     </select>
 
     <insert id="save" parameterType="recruit" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO
-        recruit(
-        title
-        , career
-        , due_date
-        , company
-        , address
-        , worker_type
-        , link
-        , add_date_time
-        , update_date_time
-        )
+            recruit(
+                title
+                , career
+                , due_date
+                , company
+                , address
+                , worker_type
+                , link
+                , add_date_time
+                , update_date_time
+            )
         VALUES(
-        #{title}
-        , #{career}
-        , #{dueDate}
-        , #{company}
-        , #{address}
-        , #{workerType}
-        , #{link}
-        , #{addDateTime}
-        , #{updateDateTime}
+            #{title}
+            , #{career}
+            , #{dueDate}
+            , #{company}
+            , #{address}
+            , #{workerType}
+            , #{link}
+            , #{addDateTime}
+            , #{updateDateTime}
         )
     </insert>
 
     <delete id="deleteById" parameterType="Long">
         DELETE FROM
-        recruit
+            recruit
         WHERE
-        id = #{id}
+            id = #{id}
     </delete>
 
     <update id="update" parameterType="recruit" useGeneratedKeys="true" keyProperty="id">
         UPDATE
-        recruit
+            recruit
         set
-        title = #{title}
-        , career = #{career}
-        , due_date = #{dueDate}
-        , company = #{company}
-        , address = #{address}
-        , worker_type = #{workerType}
-        , link = #{link}
-        , update_date_time = #{updateDateTime}
+            title = #{title}
+            , career = #{career}
+            , due_date = #{dueDate}
+            , company = #{company}
+            , address = #{address}
+            , worker_type = #{workerType}
+            , link = #{link}
+            , update_date_time = #{updateDateTime}
         WHERE
-        id = #{id}
+            id = #{id}
     </update>
 </mapper>

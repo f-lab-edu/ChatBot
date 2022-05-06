@@ -25,7 +25,7 @@ public class KakaoCrawler implements JobCrawler {
     }
 
     @Override
-    public List<Recruit> crawling() {
+    public void crawling() {
         try {
             log.info("================== Kakao Crawling Start ===================");
             String kakaoUrl = "https://careers.kakao.com";
@@ -64,8 +64,6 @@ public class KakaoCrawler implements JobCrawler {
         } finally {
             log.info("================== Kakao Crawling End =====================");
         }
-
-        return null;
     }
 
     private void deduplicate(List<Recruit> recruits, List<Recruit> findRecruits, List<Recruit> recruitsToAdd, List<Recruit> recruitsToUpdate) {
@@ -73,14 +71,14 @@ public class KakaoCrawler implements JobCrawler {
             boolean isAlreadyIn = false;
             String title = recruit.getTitle();
             for (Recruit findRecruit : findRecruits) {
-                if (title.equals(findRecruit.getTitle())) {
+                if(title.equals(findRecruit.getTitle())) {
                     recruit.setId(findRecruit.getId());
                     isAlreadyIn = true;
                     break;
                 }
             }
 
-            if (!isAlreadyIn) {
+            if(!isAlreadyIn) {
                 recruitsToAdd.add(recruit);
             } else {
                 recruitsToUpdate.add(recruit);
