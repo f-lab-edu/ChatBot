@@ -1,14 +1,16 @@
 package com.flab.fire_inform.domains.crawling.entity;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.apache.ibatis.type.Alias;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Alias("recruit")
+@ToString
 public class Recruit {
-    private final Long id;
+    private Long id;
     private final String title;
     private final String career;
     private final String dueDate;
@@ -16,8 +18,21 @@ public class Recruit {
     private final String address;
     private final String workerType;
     private final String link;
-    private final LocalDateTime addDateTime;
-    private final LocalDateTime updateDateTime;
+    private LocalDateTime addDateTime;
+    private LocalDateTime updateDateTime;
+
+    protected Recruit(Long id, String title, String career, String dueDate, String company, String address, String workerType, String link, LocalDateTime addDateTime, LocalDateTime updateDateTime) {
+        this.id = id;
+        this.title = title;
+        this.career = career;
+        this.dueDate = dueDate;
+        this.company = company;
+        this.address = address;
+        this.workerType = workerType;
+        this.link = link;
+        this.addDateTime = addDateTime;
+        this.updateDateTime = updateDateTime;
+    }
 
     private Recruit(Builder builder) {
         id = builder.id;
@@ -30,6 +45,18 @@ public class Recruit {
         link = builder.link;
         addDateTime = builder.addDateTime;
         updateDateTime = builder.updateDateTime;
+    }
+
+    public void setAddDateTimeToNow() {
+        this.addDateTime = LocalDateTime.now().withNano(0);
+    }
+
+    public void setUpdateDateTimeToNow() {
+        this.updateDateTime = LocalDateTime.now().withNano(0);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public static class Builder {
@@ -48,6 +75,7 @@ public class Recruit {
         private LocalDateTime updateDateTime = null;
 
         public Builder(String title, String company, String link) {
+            this.id = id;
             this.title = title;
             this.company = company;
             this.link = link;
