@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
+/**
+ * bulider 만들어서 리팩토링하기
+ */
 public class ErrorResponse {
 
     private final LocalDateTime timestamp = LocalDateTime.now();

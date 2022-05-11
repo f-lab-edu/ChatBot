@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Slf4j
 @RestController
@@ -35,15 +36,26 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequest loginRequest, HttpServletResponse response){
+    public ResponseEntity login(@RequestBody LoginRequest loginRequest, HttpServletResponse response, HttpSession session){
 
         // 로그인이 안되면 서비스에서 Exeption발생
         memberService.login(loginRequest);
 
-       String token = jwtProvider.createAccessToken(loginRequest.getId(),loginRequest.getPassword());
-       response.setHeader("ACCESS_TOKEN",token);
+       String accessToken = jwtProvider.createAccessToken(loginRequest.getId(),loginRequest.getPassword());
+       String refreshToken = jwtProvider.createRefreshToken(loginRequest.getId(),loginRequest.getPassword());
 
-        return new ResponseEntity(HttpStatus.OK);
+
+        /**
+         * Redis session에 id를 key값으로 저장한다.
+         * refresh_token이 필요할 때는 session에서 값 반환
+         */
+       response.setHeader("ACCESS_TOKEN",accessToken);
+       response.setHeader("REFRESH_TOKEN_KEY",loginRequest.getId());
+
+       // 아직 세션에 저장이 안된다. 연결된 것 확인 20225월1일
+       //session.setAttribute(loginRequest.getId(),refreshToken);
+
+       return new ResponseEntity(HttpStatus.OK);
     }
 
     //로그아웃
