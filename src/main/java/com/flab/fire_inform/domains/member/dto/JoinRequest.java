@@ -3,9 +3,11 @@ package com.flab.fire_inform.domains.member.dto;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Getter
 @ToString
-public class JoinRequest {
+public class JoinRequest implements Serializable {
     private String id;
     private String password;
     private String phoneNumber;
@@ -17,5 +19,4 @@ public class JoinRequest {
         this.password = password;
         this.phoneNumber = phoneNumber;
     }
-
 }

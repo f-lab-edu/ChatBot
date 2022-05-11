@@ -1,10 +1,7 @@
 package com.flab.fire_inform.global.exception.error;
 
 import org.springframework.http.HttpStatus;
-
 import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.HttpStatus.CONFLICT;
-
 
 public enum ErrorCode {
     //고객 관련 에러
