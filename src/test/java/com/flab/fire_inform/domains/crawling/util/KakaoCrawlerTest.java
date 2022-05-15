@@ -1,7 +1,7 @@
 package com.flab.fire_inform.domains.crawling.util;
 
-import com.flab.fire_inform.domains.crawling.entity.Recruit;
-import com.flab.fire_inform.domains.crawling.mapper.RecruitMapper;
+import com.flab.fire_inform.domains.recruit.entity.Recruit;
+import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +22,7 @@ class KakaoCrawlerTest {
 
     @Test
     @Transactional
-    public void saveTest() throws Exception {
+    public void saveTest() {
         //given
         Recruit recruit = new Recruit.Builder("testTitle", "testCompany", "testLink")
                 .address("testAddress")
@@ -38,7 +38,7 @@ class KakaoCrawlerTest {
     }
 
     @Test
-    public void findByCompanyTest() throws Exception {
+    public void findByCompanyTest() {
         //given
         Recruit recruit1 = new Recruit.Builder("testTitle1", "testCompany", "testLink1")
                 .address("testAddress1")
@@ -71,7 +71,7 @@ class KakaoCrawlerTest {
     }
 
     @Test
-    public void findByIdTest() throws Exception {
+    public void findByIdTest() {
         //given
         Recruit recruit = new Recruit.Builder("testTitle", "testCompany", "testLink")
                 .address("testAddress")
@@ -89,7 +89,7 @@ class KakaoCrawlerTest {
     }
 
     @Test
-    public void deleteByIdTest() throws Exception {
+    public void deleteByIdTest() {
         //given
         Recruit recruit = new Recruit.Builder("testTitle", "testCompany", "testLink")
                 .address("testAddress")
@@ -107,7 +107,7 @@ class KakaoCrawlerTest {
     }
 
     @Test
-    public void updateTest() throws Exception {
+    public void updateTest() {
         //given
         Recruit recruit = new Recruit.Builder("testTitle", "testCompany", "testLink")
                 .address("testAddress")

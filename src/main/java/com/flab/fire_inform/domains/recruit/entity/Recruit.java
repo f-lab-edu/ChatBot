@@ -1,4 +1,4 @@
-package com.flab.fire_inform.domains.crawling.entity;
+package com.flab.fire_inform.domains.recruit.entity;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -75,7 +75,6 @@ public class Recruit {
         private LocalDateTime updateDateTime = null;
 
         public Builder(String title, String company, String link) {
-            this.id = id;
             this.title = title;
             this.company = company;
             this.link = link;
