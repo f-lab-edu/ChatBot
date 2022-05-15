@@ -15,7 +15,7 @@ public class CrawlerController {
         this.jobCrawler = jobCrawler;
     }
 
-    @Scheduled(cron = "* */60 * * * *")
+    @Scheduled(cron = "0 0 8 * * *")
     public void crawling() {
         jobCrawler.crawling();
     }
