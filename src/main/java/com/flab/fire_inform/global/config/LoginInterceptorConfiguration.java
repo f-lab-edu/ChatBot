@@ -5,11 +5,11 @@ import com.flab.fire_inform.domains.member.interceptor.LoginTokenHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Slf4j
 @Configuration
-public class LoginInterceptorConfiguration extends WebMvcConfigurationSupport {
+public class LoginInterceptorConfiguration implements WebMvcConfigurer {
 
     private final LoginTokenHandler loginTokenHandler;
 
@@ -19,12 +19,12 @@ public class LoginInterceptorConfiguration extends WebMvcConfigurationSupport {
 
     // 로그인과 회원가입으 제외하고 모든 요청에서 토큰 체크할 수 있도록
     @Override
-    protected void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginTokenHandler)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/login")
-                .excludePathPatterns("/join")
-                .excludePathPatterns("/newsList")
-                .excludePathPatterns("/newsList/*");
+                .addPathPatterns("/api/**")
+                .excludePathPatterns("/api/login")
+                .excludePathPatterns("/api/join")
+                .excludePathPatterns("/api/newsList")
+                .excludePathPatterns("/api/newsList/*");
     }
 }

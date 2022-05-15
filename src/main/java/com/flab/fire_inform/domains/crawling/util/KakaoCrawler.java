@@ -1,7 +1,7 @@
 package com.flab.fire_inform.domains.crawling.util;
 
-import com.flab.fire_inform.domains.crawling.entity.Recruit;
-import com.flab.fire_inform.domains.crawling.mapper.RecruitMapper;
+import com.flab.fire_inform.domains.recruit.entity.Recruit;
+import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
