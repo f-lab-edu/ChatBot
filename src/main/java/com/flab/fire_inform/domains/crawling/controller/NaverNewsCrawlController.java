@@ -24,7 +24,7 @@ public class NaverNewsCrawlController {
      * {host}:port/newsList/{DOMAIN}
      *
      */
-    @GetMapping(value={"/newsList/{domain}"})
+    @GetMapping(value={"/news/{domain}"})
     public ResponseEntity getNewsList(@PathVariable(required = false) String domain) throws IOException {
 
         if(domain == null){
