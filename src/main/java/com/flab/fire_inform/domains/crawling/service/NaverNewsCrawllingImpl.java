@@ -7,6 +7,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -120,5 +122,10 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
         throw new CustomException(ErrorCode.DOMAIN_NOT_FOUND) ;
     }
 
+    
+    // 예약일자를 받았아서 사용할 수 있었으면 좋겠다.
+    //cron = "* * * * * *"
+    // *        *        *        *        *        *        *
+    //초       분      시      일       월     요일    년도(생략가능)
 
 }
