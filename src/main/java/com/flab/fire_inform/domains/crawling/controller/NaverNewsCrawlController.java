@@ -20,18 +20,20 @@ public class NaverNewsCrawlController {
         this.newsCrawlling = newsCrawlling;
     }
 
-    /**
+    /*
      * {host}:port/newsList/{DOMAIN}
-     * @param domain
-     * @return
-     * @throws IOException
+     *
      */
-    @GetMapping(value={"/newsList/{domain}","/newsList"})
+    @GetMapping(value={"/newsList/{domain}"})
     public ResponseEntity getNewsList(@PathVariable(required = false) String domain) throws IOException {
+
         if(domain == null){
             throw new CustomException(ErrorCode.DOMAIN_NOT_FOUND);
         }
-        newsCrawlling.setUrl(domain);
-        return new ResponseEntity(newsCrawlling.getNaverNewscontents(),HttpStatus.OK);
+
+        //도메인 등록
+
+        return new ResponseEntity(newsCrawlling.getNaverNewsContents(newsCrawlling.convertURL(domain)),HttpStatus.OK);
     }
+
 }
