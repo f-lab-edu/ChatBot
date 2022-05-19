@@ -77,7 +77,7 @@ public class NewsCrawllingTest {
     }
 
     @Test
-    @DisplayName("빌더 테스트")
+    @DisplayName("Response 객체 빌더 테스트")
     void testBuilder() {
         Testt smalltest = new Testt(1, 2);
         Response test = new Response.Builder(200, "this is message").data(smalltest).build();
@@ -102,4 +102,10 @@ public class NewsCrawllingTest {
         }
     }
 
+
+    @Test
+    @DisplayName("스케줄러 테스트")
+    void testSchedular(){
+        List<String> news = new ArrayList<>();
+    }
 }
