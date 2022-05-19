@@ -5,18 +5,19 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Getter
 public class Response<T> {
 
-    private final LocalDateTime localDateTime;
+    private final Timestamp localDateTime;
     private final int code;
     private final String message;
     private final T data;
     public static class Builder<T>{
         // 필수 요소에는 final 적용
-        private final LocalDateTime localDateTime = LocalDateTime.now();
+        private final Timestamp localDateTime = new Timestamp(System.currentTimeMillis());
         private final int code;
         private final String message;
 
