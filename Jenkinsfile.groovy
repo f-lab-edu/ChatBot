@@ -26,7 +26,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh "echo $DB_USERNAME"
+                sh 'echo $DB_USERNAME'
                 sh "./gradlew clean build"
             }
         }
