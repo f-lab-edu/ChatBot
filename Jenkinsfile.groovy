@@ -3,6 +3,11 @@ pipeline {
     environment {
         DEPLOY_SERVER_ID = credentials('deployServerId')
         DEPLOY_SERVER_PASSWORD = credentials('deployServerPassword')
+        SECRET_KEY = credentials('SECRET_KEY')
+        DB_USERNAME = credentials('DB_USERNAME')
+        DB_PASSWORD = credentials('DB_PASSWORD')
+        DB_URL = credentials('DB_URL')
+        DB_PORT = credentials('DB_PORT')
     }
 
     stages {
@@ -14,13 +19,14 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/f-lab-edu/Fire-inform', branch: 'jenkins',
+                git url: 'https://github.com/f-lab-edu/ChatBot.git', branch: 'jenkins',
                 credentialsId: 'cbf50f14-c18f-4bc0-a792-668780641040'
             }
         }
 
         stage('Build') {
             steps {
+                sh "echo $DB_USERNAME"
                 sh "./gradlew clean build"
             }
         }
