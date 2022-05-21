@@ -3,11 +3,11 @@ pipeline {
     environment {
         DEPLOY_SERVER_ID = credentials("deployServerId")
         DEPLOY_SERVER_PASSWORD = credentials("deployServerPassword")
-//         SECRET_KEY = credentials('SECRET_KEY')
-//         DB_USERNAME = credentials('DB_USERNAME')
-//         DB_PASSWORD = credentials('DB_PASSWORD')
-//         DB_URL = credentials('DB_URL')
-//         DB_PORT = credentials('DB_PORT')
+        SECRET_KEY = credentials('SECRET_KEY')
+        DB_USERNAME = credentials('DB_USERNAME')
+        DB_PASSWORD = credentials('DB_PASSWORD')
+        DB_URL = credentials('DB_URL')
+        DB_PORT = credentials('DB_PORT')
     }
 
     stages {
