@@ -13,12 +13,12 @@ pipeline {
             }
         }
 
-//         stage("Checkout") {
-//             steps {
-//                 git url: "https://github.com/f-lab-edu/ChatBot.git", branch: "jenkins",
-//                 credentialsId: "cbf50f14-c18f-4bc0-a792-668780641040"
-//             }
-//         }
+        stage("Checkout") {
+            steps {
+                git url: "https://github.com/f-lab-edu/ChatBot.git", branch: "jenkins",
+                credentialsId: "cbf50f14-c18f-4bc0-a792-668780641040"
+            }
+        }
 
         stage("Build") {
             steps {
