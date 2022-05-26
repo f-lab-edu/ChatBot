@@ -5,7 +5,8 @@ import static org.springframework.http.HttpStatus.*;
 
 public enum ErrorCode {
     //고객 관련 에러
-    INVALID_ACCESS_TOKEN(BAD_REQUEST,"토큰이 유효하지 않습니다."),
+    INVALID_TOKEN(BAD_REQUEST,"토큰이 유효하지 않습니다."),
+    Refresh_TOKEN_NOT_FOUND(BAD_REQUEST,"토큰이 유효하지 않습니다."),
     MEMBER_NOT_FOUND(NOT_FOUND,"아이디와 비밀번호를 확인하세요."),
     DUPLICATE_ID(CONFLICT,"아이디가 이미 존재합니다."),
     SERVER_ERROR(BAD_REQUEST,"데이터가 이미 존재합니다."),

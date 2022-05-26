@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @Slf4j
 @RestController
+@RequestMapping("/api")
 public class NaverNewsCrawlController {
 
     private final NewsCrawlling newsCrawlling;
@@ -20,20 +21,14 @@ public class NaverNewsCrawlController {
         this.newsCrawlling = newsCrawlling;
     }
 
-    /*
-     * {host}:port/newsList/{DOMAIN}
-     *
-     */
-    @GetMapping(value={"/news/{domain}"})
+    // {host}:port/newsList/{DOMAIN}
+    @PostMapping(value={"/news/{domain}"})
     public ResponseEntity getNewsList(@PathVariable(required = false) String domain) throws IOException {
 
         if(domain == null){
             throw new CustomException(ErrorCode.DOMAIN_NOT_FOUND);
         }
-
         //도메인 등록
-
         return new ResponseEntity(newsCrawlling.getNaverNewsContents(newsCrawlling.convertURL(domain)),HttpStatus.OK);
     }
-
 }

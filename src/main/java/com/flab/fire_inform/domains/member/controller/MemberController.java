@@ -46,16 +46,18 @@ public class MemberController {
        String accessToken = jwtProvider.createAccessToken(loginRequest.getId(),loginRequest.getPassword());
        String refreshToken = jwtProvider.createRefreshToken(loginRequest.getId(),loginRequest.getPassword());
 
-
         /**
-         * Redis session에 id를 key값으로 저장한다.
+         * Redis session에 id를 key값으로, value 값으로 regfreshToken을 저장
          * refresh_token이 필요할 때는 session에서 값 반환
          */
+
        response.setHeader("ACCESS_TOKEN",accessToken);
        response.setHeader("REFRESH_TOKEN_KEY",loginRequest.getId());
+        loginRequest.setRefreshToken(refreshToken);
 
-       // 아직 세션에 저장이 안된다. 연결된 것 확인 20225월1일
-       //session.setAttribute(loginRequest.getId(),refreshToken);
+        log.info(loginRequest.toString());
+       // 아직 세션에 저장이 안된다. 연결된 것 확인 2022 5월1일 --> 다시 적용함
+       session.setAttribute(loginRequest.getId(),loginRequest);
 
        return new ResponseEntity(HttpStatus.OK);
     }

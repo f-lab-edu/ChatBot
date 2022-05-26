@@ -4,6 +4,9 @@ refreshTokenTime: 604800000
 
 server:
   port: 8080
+  servlet:
+    session:
+      timeout: 3000
 
 spring:
   datasource:
@@ -12,7 +15,17 @@ spring:
     password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-logging:
-  level:
-    Account: warn
+
+  session:
+    store-type: redis
+  redis:
+    flush-mode: on_save
+    namespace: spring:session
+    host: localhost
+    password:
+    port: 6379
+
+  logging:
+    level:
+      Account: warn
 

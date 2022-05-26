@@ -4,12 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 
 @Getter
 @ToString
-public class LoginRequest {
+public class LoginRequest implements Serializable {
     private String id;
     private String password;
+
+    private String refreshToken;
     public LoginRequest() {
     }
     public LoginRequest(String id, String password) {
@@ -17,4 +21,7 @@ public class LoginRequest {
         this.password = password;
     }
 
+    public void setRefreshToken(String refreshToken){
+        this.refreshToken = refreshToken;
+    }
 }
