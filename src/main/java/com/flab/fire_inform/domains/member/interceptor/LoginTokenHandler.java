@@ -31,7 +31,7 @@ public class LoginTokenHandler implements HandlerInterceptor {
 
         if(accessToken != null && jwtProvider.validationToken(accessToken)){
 
-            log.info("[Prehandler] :::::Access_token 통과");
+            log.info("[Prehandler] :::::Access_token OK");
             return true;
 
         }else{
@@ -41,17 +41,17 @@ public class LoginTokenHandler implements HandlerInterceptor {
 
             if (loginRequest == null){
                 // 기존에 Objects.requireNonNull(loginRequest) 사용 -- 명확한 에러를 전달할 수 없음.
-                throw new CustomException(ErrorCode.Refresh_TOKEN_NOT_FOUND);
+                throw new CustomException(ErrorCode.REFRESH_TOKEN_NOT_FOUND);
             }
 
             String refreshToken = loginRequest.getRefreshToken();
 
-            log.info("[Prehandler] :::::::::  RefreshToken is  =  " + refreshToken);
+            log.info("[Prehandler] :::::::::  RefreshToken is = {}", refreshToken);
 
             if (refreshToken != null && jwtProvider.validationToken(refreshToken)){
                 String newAccessToken = jwtProvider.createAccessToken(loginRequest.getId(),loginRequest.getPassword());
                 response.setHeader(ACCESS_TOKEN,newAccessToken);
-                log.info("[Prehandler] :::::REFRESH_TOKEN 통과 ---> AccessToken재발급 is ::: " + newAccessToken);
+                log.info("[Prehandler] :::::REFRESH_TOKEN 통과 ---> NewAccessToken ={} ", newAccessToken);
                 return true;
             }
 

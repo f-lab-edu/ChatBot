@@ -53,7 +53,7 @@ public class MemberController {
 
        response.setHeader("ACCESS_TOKEN",accessToken);
        response.setHeader("REFRESH_TOKEN_KEY",loginRequest.getId());
-        loginRequest.setRefreshToken(refreshToken);
+       loginRequest.setRefreshToken(refreshToken);
 
         log.info(loginRequest.toString());
        // 아직 세션에 저장이 안된다. 연결된 것 확인 2022 5월1일 --> 다시 적용함

@@ -1,4 +1,5 @@
 package com.flab.fire_inform.domains.crawling.service;
+import com.flab.fire_inform.domains.conversation.dto.OutputContext;
 import com.flab.fire_inform.domains.crawling.dto.EconomyNewsUrl;
 import com.flab.fire_inform.global.exception.CustomException;
 import com.flab.fire_inform.global.exception.error.ErrorCode;
@@ -45,23 +46,35 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
                 contentsList.add(content.toString());
             }
         }
-        log.info("[NaverNesCrawllingImpl] :::::: contentList ={}" + contentsList.toString());
+        log.info("[NaverNesCrawllingImpl] :::::: contentList ={}", contentsList.toString());
         return contentsList;
     }
 
-    public List<String> getNaverNewsEconomyContents(String url) throws IOException {
-        List<String> contentsList = new ArrayList<>();
+    public List<OutputContext> getNaverNewsEconomyContents(String url) throws IOException {
+        List<OutputContext> contentsList = new ArrayList<>();
         int size = getPgaing(url);
 
-            Document doc = Jsoup.connect(url).get();
-
+        for(int i =1 ; i<= size; i++) {
+            String pageUrl = url + "&page=" + i;
+            Document doc = Jsoup.connect(pageUrl).get();
+            Elements contents;
             //헤드라인과 url 가져오기
-            Elements contents = doc.select("tr > td.content > div.content > div.list_body > ul > li > dl > dt:not(.photo) > a");
-            for (Element content : contents) {
-                contentsList.add(content.toString());
+
+            /*
+            main과 domain 별로 분리
+             */
+            if (url.equals(EconomyNewsUrl.MAIN.getUrl())){
+                contents = doc.select("tr > td.content > div.content > div.list_body > div._persist " +
+                        "> div.cluster > div.cluster_group > div.cluster_head > div.cluster_head_inner > div.cluster_head_topic_wrap > h2.cluster_head_topic > a");
+            }else{
+                contents = doc.select("tr > td.content > div.content > div.list_body > ul > li > dl > dt:not(.photo) > a");
             }
 
-        log.info("[NaverNesCrawllingImpl] :::::: contentList ={}" + contentsList.toString());
+            for (Element content : contents) {
+                contentsList.add(OutputContext.builder().news(content.toString()).build());
+            }
+        }
+        log.info("[NaverNesCrawllingImpl] :::::: contentList ={}", contentsList.toString());
         return contentsList;
     }
 
@@ -80,7 +93,7 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
         // 자신의 페이지는 count 안된다.
         int paging = contents.size() + 1;
 
-        log.info("[NaverNesCrawllingImpl] :::::: paging ={}" + paging);
+        log.info("[NaverNesCrawllingImpl] :::::: paging ={}", paging);
         return paging;
     }
 

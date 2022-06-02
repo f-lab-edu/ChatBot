@@ -25,6 +25,7 @@ public class LoginInterceptorConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns("/api/login")
                 .excludePathPatterns("/api/join")
                 .excludePathPatterns("/api/newsList")
+                .excludePathPatterns("/api/check/*")
                 .excludePathPatterns("/api/newsList/*");
     }
 }
