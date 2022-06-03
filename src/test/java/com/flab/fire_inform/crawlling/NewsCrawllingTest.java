@@ -80,8 +80,8 @@ public class NewsCrawllingTest {
     @DisplayName("Response 객체 빌더 테스트")
     void testBuilder() {
         Testt smalltest = new Testt(1, 2);
-        Response test = new Response.Builder(200, "this is message").data(smalltest).build();
-        Response test2 = new Response.Builder(500, "Server Error").data(smalltest).build();
+        Response<Testt> test = new Response.Builder<Testt>(200, "this is message").data(smalltest).build();
+        Response<Testt> test2 = new Response.Builder<Testt>(500, "Server Error").data(smalltest).build();
         ResponseEntity test3 = Response.toResponseEntitySuccess(200, "this is message", smalltest);
         ResponseEntity test4 = Response.toResponseEntityError(ErrorCode.DOMAIN_NOT_FOUND);
 
@@ -104,8 +104,8 @@ public class NewsCrawllingTest {
 
 
     @Test
-    @DisplayName("스케줄러 테스트")
-    void testSchedular(){
+    @DisplayName("Redis 저장소 테스트")
+    void testRedisSession(){
         List<String> news = new ArrayList<>();
     }
 }
