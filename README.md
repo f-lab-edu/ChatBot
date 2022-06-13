@@ -1,4 +1,4 @@
-# Fire-inform
+# Recruit&Economy ChatBot
 ## 프로젝트 구조도
 <p align="center">
 <img width="1174" alt="스크린샷 2022-04-21 오후 5 05 27" src="https://user-images.githubusercontent.com/78134917/164411877-d2d1670d-2d7c-4603-afc8-ac82b3cbfd41.png">
