@@ -1,6 +1,6 @@
 package com.flab.fire_inform.domains.crawling.service;
 
-import com.flab.fire_inform.domains.conversation.dto.OutputContext;
+import com.flab.fire_inform.domains.conversation.dto.newsList.ListItem;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,8 +11,7 @@ import java.util.List;
 public interface NewsCrawlling {
 
     List<String> getNaverNewsContents(String url) throws IOException;
-    List<OutputContext> getNaverNewsEconomyContents(String url) throws IOException;
-   // List<String> getNaverNewsMainPointContents(String url) throws IOException;
     int getPgaing(String url) throws IOException;
     String convertURL(String domain);
+    List<ListItem> getNaverNewsListEconomyContents(String convertURL)throws IOException;
 }
