@@ -3,16 +3,16 @@ package com.flab.fire_inform.domains.conversation.dto.newsList;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.List;
 
 @ToString
 @Getter
-public class ListCard {
+public class ListCard implements Serializable {
 
     private final ListItem header;
     private final List items;
-
     private final List<Button> buttons;
 
 

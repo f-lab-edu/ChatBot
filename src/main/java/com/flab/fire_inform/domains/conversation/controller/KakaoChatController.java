@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +21,8 @@ public class KakaoChatController {
     }
 
     @RequestMapping(value = "/api/check/{domain}" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
-    public NewsResponse newsListAPI(@PathVariable(required = false) String domain,
-                                   @RequestBody(required = false) Map<String, Object> params) throws IOException {
+    public SkillResponse newsListAPI(@PathVariable(required = false) String domain,
+                                     @RequestBody(required = false) Map<String, Object> params) throws IOException {
 
         String url = newsCrawlling.convertURL(domain);
         // 본문 아이템 리스트
@@ -35,14 +35,16 @@ public class KakaoChatController {
         buttons.add(new Button(url));
 
         // 여기는 listCard 생성
-        ListCard listCard = new ListCard(header, items,buttons);
-        List<ListCard> listCards = new ArrayList<ListCard>();
-        listCards.add(listCard);
+        ListCard listCard = new ListCard(header, items, buttons);
+        HashMap<String,ListCard> listcardHashMap = new HashMap<>();
+        listcardHashMap.put("listCard",listCard);
+        List<HashMap<String,ListCard>> listCards = new ArrayList();
+        listCards.add(listcardHashMap);
 
 
         SkillTemplate skillTemplate = new SkillTemplate(listCards);
-        NewsResponse newsResponse = new NewsResponse("2.0", skillTemplate);
+        SkillResponse skillResponse = new SkillResponse("2.0", skillTemplate);
 
-        return newsResponse;
+        return skillResponse;
     }
 }
