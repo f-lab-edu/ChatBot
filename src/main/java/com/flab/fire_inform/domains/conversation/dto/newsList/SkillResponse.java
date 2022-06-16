@@ -7,7 +7,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @AllArgsConstructor
-public class NewsResponse {
+public class SkillResponse {
     private String version;
     private SkillTemplate template;
 }

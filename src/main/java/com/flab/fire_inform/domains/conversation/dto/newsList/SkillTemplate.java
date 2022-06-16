@@ -10,7 +10,11 @@ import java.util.List;
 
 @ToString
 @Getter
-@AllArgsConstructor
-public class SkillTemplate {
-    private List outputs;
+
+public class SkillTemplate<T> {
+    private T outputs;
+
+    public SkillTemplate(T t){
+        this.outputs = t;
+    }
 }
