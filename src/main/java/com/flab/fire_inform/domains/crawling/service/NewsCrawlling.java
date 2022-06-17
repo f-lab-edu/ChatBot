@@ -10,8 +10,8 @@ import java.util.List;
  */
 public interface NewsCrawlling {
 
-    List<String> getNaverNewsContents(String url) throws IOException;
-    int getPgaing(String url) throws IOException;
+    List<String> getNaverNewsContents(String domain) throws IOException;
+   // int getPgaing(String url) throws IOException;
     String convertURL(String domain);
-    List<ListItem> getNaverNewsListEconomyContents(String convertURL)throws IOException;
+    List<ListItem> getNaverNewsListEconomyContents(String domain)throws IOException;
 }

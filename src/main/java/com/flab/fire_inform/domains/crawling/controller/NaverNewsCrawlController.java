@@ -32,7 +32,7 @@ public class NaverNewsCrawlController {
             throw new CustomException(ErrorCode.DOMAIN_NOT_FOUND);
         }
         //도메인 등록
-        return new ResponseEntity(newsCrawlling.getNaverNewsContents(newsCrawlling.convertURL(domain)),HttpStatus.OK);
+        return new ResponseEntity(newsCrawlling.getNaverNewsContents(domain),HttpStatus.OK);
     }
 
 
