@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Button implements Serializable {
 
     private final String label = "더 보기";
-    private final String action = "block";
+    private final String action = "webLink";
     private final String webLinkUrl;
 
     public Button(String webLinkUrl){

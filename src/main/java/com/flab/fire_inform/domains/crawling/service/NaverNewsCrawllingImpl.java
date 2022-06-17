@@ -99,15 +99,15 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
      * @return paging
      * @throws IOException
      */
-    @Override
-    public int getPgaing(String url) throws IOException{
+    private int getPgaing(String url) throws IOException{
+
         Document doc = Jsoup.connect(url).get();
         Elements contents = doc.select("tr > td.content > div.content > div.paging > a");
-
         // 자신의 페이지는 count 안된다.
         int paging = contents.size() + 1;
 
         log.info("[NaverNesCrawllingImpl] :::::: paging ={}", paging);
+
         return paging;
     }
 

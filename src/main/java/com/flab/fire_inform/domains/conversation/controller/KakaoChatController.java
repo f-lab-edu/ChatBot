@@ -23,11 +23,12 @@ public class KakaoChatController {
     @RequestMapping(value = "/api/check/{domain}" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
     public SkillResponse newsListAPI(@PathVariable(required = false) String domain,
                                      @RequestBody(required = false) Map<String, Object> params) throws IOException {
-
+        // header setting
         String url = newsCrawlling.convertURL(domain);
-        // 본문 아이템 리스트
         String date = DateTimeFormatter.ofPattern("yyyy-MM-dd HH").format(LocalDateTime.now()) + "시 날짜 경제 뉴스입니다.";
         ListItem header = ListItem.builder(date).build();
+
+        // 본문 아이템 리스트
         List<ListItem> items = newsCrawlling.getNaverNewsListEconomyContents(url).subList(0,4);
 
         // 버튼 생성
@@ -38,6 +39,7 @@ public class KakaoChatController {
         ListCard listCard = new ListCard(header, items, buttons);
         HashMap<String,ListCard> listcardHashMap = new HashMap<>();
         listcardHashMap.put("listCard",listCard);
+
         List<HashMap<String,ListCard>> listCards = new ArrayList();
         listCards.add(listcardHashMap);
 
