@@ -10,13 +10,20 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
-public class SimpleTextResponse {
+public class SimpleTextResponse implements CommonResponse{
     private final String version;
     private final Template template;
 
     private SimpleTextResponse(String version, Template template) {
         this.version = version;
         this.template = template;
+    }
+
+    public static SimpleTextResponse empty() {
+        List<Output> outputs = new ArrayList<>();
+        outputs.add(new Output(new SimpleText("신규 추가된 채용공고가 존재하지 않습니다.")));
+
+        return new SimpleTextResponse("2.0", new Template(outputs));
     }
 
     public static SimpleTextResponse of(List<Recruit> recruits) {

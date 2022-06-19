@@ -18,7 +18,7 @@ public class RecruitService {
     }
 
     public List<Recruit> getNewRecruitsAfterYesterday() {
-        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(30);
 
         return recruitMapper.findAll().stream()
                 .filter(d -> d.getAddDateTime().isAfter(yesterday))
