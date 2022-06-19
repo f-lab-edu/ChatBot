@@ -9,13 +9,11 @@ import com.flab.fire_inform.domains.recruit.entity.Recruit;
 import com.flab.fire_inform.domains.recruit.service.RecruitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
 @Slf4j
 public class RecruitController {
 
@@ -27,7 +25,7 @@ public class RecruitController {
         this.objectMapper = objectMapper;
     }
 
-    @PostMapping("/new-recruits")
+    @PostMapping("/api/new-recruits")
     public CommonResponse getNewRecruitsAfterYesterdayByListCard() {
         List<Recruit> findRecruits = recruitService.getNewRecruitsAfterYesterday();
         CommonResponse result;
