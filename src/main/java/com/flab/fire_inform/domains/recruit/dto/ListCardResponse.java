@@ -2,13 +2,15 @@ package com.flab.fire_inform.domains.recruit.dto;
 
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class ListCardResponse {
+@Slf4j
+public class ListCardResponse implements CommonResponse {
     private final String version;
     private final Template template;
 
@@ -18,34 +20,49 @@ public class ListCardResponse {
     }
 
     public static ListCardResponse of(List<Recruit> recruits) {
-        List<Item> items = new ArrayList<>();
-        for (Recruit recruit : recruits) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(recruit.getCompany());
-
-            if(recruit.getCareer() != null) {
-                sb.append("/").append(recruit.getCareer());
-            }
-
-            if(recruit.getWorkerType() != null) {
-                sb.append("/").append(recruit.getWorkerType());
-            }
-
-            if(recruit.getDueDate() != null) {
-                sb.append("/").append(recruit.getDueDate());
-            }
-
-            if(recruit.getAddress() != null) {
-                sb.append("/").append(recruit.getAddress());
-            }
-
-            Item item = new Item(recruit.getTitle(), sb.toString(), new Link(recruit.getLink()));
-            items.add(item);
-        }
-
+        String now = LocalDate.now().getMonthValue() + "월 " + LocalDate.now().getDayOfMonth() + "일";
         List<Output> outputs = new ArrayList<>();
-        String now = LocalDate.now().getMonthValue() + "/" + LocalDate.now().getDayOfMonth();
-        outputs.add(new Output(new ListCard(new Header(now + " 신규 채용 공고"), items)));
+        int totalCount = recruits.size();
+        int totalPage = totalCount / 5 + 1;
+        int currentPage = 1;
+        int currentIndex = 0;
+        log.info("totalCount: {}", totalCount);
+        log.info("totalPage: {}", totalPage);
+
+        while(currentIndex < totalCount) {
+            log.info("currentIndex: {}", currentIndex);
+            log.info("totalCount: {}", totalCount);
+            List<Item> items = new ArrayList<>();
+            for(int i = currentIndex; i < totalCount; i++) {
+                Recruit recruit = recruits.get(i);
+                StringBuilder sb = new StringBuilder();
+                sb.append(recruit.getCompany());
+
+                if(recruit.getCareer() != null) {
+                    sb.append("/").append(recruit.getCareer());
+                }
+
+                if(recruit.getWorkerType() != null) {
+                    sb.append("/").append(recruit.getWorkerType());
+                }
+
+                if(recruit.getDueDate() != null) {
+                    sb.append("/").append(recruit.getDueDate());
+                }
+
+                if(recruit.getAddress() != null) {
+                    sb.append("/").append(recruit.getAddress());
+                }
+
+                Item item = new Item(recruit.getTitle(), sb.toString(), new Link(recruit.getLink()));
+                items.add(item);
+                if(i == totalCount - 1 || i - currentIndex == 4) {
+                    outputs.add(new Output(new ListCard(new Header(now + " 신규 채용 공고 (" + currentPage++ + "/" + totalPage + ")"), items)));
+                    currentIndex = i + 1;
+                    break;
+                }
+            }
+        }
 
         return new ListCardResponse("2.0", new Template(outputs));
     }

@@ -2,6 +2,8 @@ package com.flab.fire_inform.domains.recruit.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flab.fire_inform.domains.recruit.dto.CommonResponse;
+import com.flab.fire_inform.domains.recruit.dto.ListCardResponse;
 import com.flab.fire_inform.domains.recruit.dto.SimpleTextResponse;
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
 import com.flab.fire_inform.domains.recruit.service.RecruitService;
@@ -26,9 +28,15 @@ public class RecruitController {
     }
 
     @PostMapping("/new-recruits")
-    public SimpleTextResponse getNewRecruitsAfterYesterdayBySimpleText() {
+    public CommonResponse getNewRecruitsAfterYesterdayByListCard() {
         List<Recruit> findRecruits = recruitService.getNewRecruitsAfterYesterday();
-        SimpleTextResponse result = SimpleTextResponse.of(findRecruits);
+        CommonResponse result;
+        if(findRecruits.size() != 0) {
+            result = ListCardResponse.of(findRecruits);
+        } else {
+            result = SimpleTextResponse.empty();
+        }
+
         try {
             String resultJson = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
             log.info(resultJson);
