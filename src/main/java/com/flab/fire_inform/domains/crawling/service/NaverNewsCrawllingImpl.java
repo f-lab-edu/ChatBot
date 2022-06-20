@@ -23,7 +23,7 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
      * @throws IOException
      */
     @Override
-    public List<String> getNaverNewsContents(String url) throws IOException {
+    public List<String> getNewsContents(String url) throws IOException {
         List<String> contentsList = new ArrayList<>();
         int size = getPgaing(url);
 
@@ -54,9 +54,9 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
 
 
     /**
-    템플릿에 담아서 반환해주는 뉴스 목록
+    템플릿에 담아서 반환해주는 뉴스 목록 for Kakao
      **/
-    public List<ListItem> getNaverNewsListEconomyContents(String url) throws IOException {
+    public List<ListItem> getNewsListForKaKao(String url) throws IOException {
         List<ListItem> itemList = new ArrayList<>();
         int size = getPgaing(url);
 
@@ -75,6 +75,7 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
                         "> div.cluster > div.cluster_group > div.cluster_head > div.cluster_head_inner > div.cluster_head_topic_wrap > h2.cluster_head_topic > a");
 
             }else{
+
 
                 contents = doc.select("tr > td.content > div.content > div.list_body > ul > li > dl > dt:not(.photo) > a");
 
