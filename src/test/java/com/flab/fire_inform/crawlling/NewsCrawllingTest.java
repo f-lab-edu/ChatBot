@@ -1,5 +1,6 @@
 package com.flab.fire_inform.crawlling;
 
+import com.flab.fire_inform.domains.conversation.dto.newsList.ListItem;
 import com.flab.fire_inform.domains.crawling.dto.EconomyNewsUrl;
 import com.flab.fire_inform.domains.crawling.service.NaverNewsCrawllingImpl;
 import com.flab.fire_inform.domains.crawling.service.NewsCrawlling;
@@ -12,12 +13,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+@SpringBootTest
 public class NewsCrawllingTest {
 
     static String url = "https://news.naver.com/main/list.naver?mode=LS2D&mid=shm&sid1=101&sid2=259";
@@ -49,6 +51,21 @@ public class NewsCrawllingTest {
     }
 
     @Test
+    @DisplayName("kakao Crawling Test")
+    void kakaoTest() throws IOException{
+        NewsCrawlling newsCrawlling = new NaverNewsCrawllingImpl();
+
+        String newsUrl = newsCrawlling.convertURL("FINANCE");
+
+        List<ListItem> items = newsCrawlling.getNewsListForKaKao(newsUrl);
+
+        for(ListItem item : items){
+
+        }
+    }
+
+
+    @Test
     @DisplayName("페이지 개수 제공")
     void getPage() throws IOException {
         Document doc = Jsoup.connect(url).get();
@@ -64,7 +81,7 @@ public class NewsCrawllingTest {
     void servicetest() throws IOException {
         NewsCrawlling nnc = new NaverNewsCrawllingImpl();
         url = EconomyNewsUrl.FINANCE.getUrl();
-        List<String> contentList = nnc.getNaverNewsContents(url);
+        List<String> contentList = nnc.getNewsContents(url);
         for (String arr : contentList) {
             System.out.println("arr = " + arr);
         }

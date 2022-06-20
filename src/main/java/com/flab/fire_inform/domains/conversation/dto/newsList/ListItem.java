@@ -7,13 +7,16 @@ import lombok.ToString;
 @ToString
 @Getter
 public class ListItem {
-    private String title;
-    private String description;
-    private Link link;
+    private final String title;
+    private final String description;
+
+    private final String imageUrl;
+    private final Link link;
 
     private ListItem(ListItemBuilder builder) {
         this.title = builder.title;
         this.description = builder.description;
+        this.imageUrl = builder.imageUrl;
         this.link = builder.link;
     }
     public static ListItemBuilder builder(String title){
@@ -23,6 +26,7 @@ public class ListItem {
     public static class ListItemBuilder{
         private String title;
         private String description;
+        private String imageUrl;
         private Link link;
 
         private ListItemBuilder(String title){
@@ -36,6 +40,11 @@ public class ListItem {
         }
         public ListItemBuilder description(String description){
             this.description = description;
+            return this;
+        }
+
+        public ListItemBuilder imageUrl(String imageUrl){
+            this.imageUrl = imageUrl;
             return this;
         }
 
