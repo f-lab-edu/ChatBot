@@ -36,10 +36,10 @@ class RecruitServiceTest {
         Recruit recruit3 = new Recruit.Builder("testTitle3", "testCompany3", "testLink3")
                 .addDateTime(LocalDateTime.now().minusDays(7))
                 .Build();
-        when(recruitService.getNewRecruitsAfterYesterday()).thenReturn(Arrays.asList(recruit1, recruit2));
+        when(recruitService.getAllRecruitsAfterYesterday()).thenReturn(Arrays.asList(recruit1, recruit2));
 
         //when
-        List<Recruit> newRecruitsAfterYesterday = recruitService.getNewRecruitsAfterYesterday();
+        List<Recruit> newRecruitsAfterYesterday = recruitService.getAllRecruitsAfterYesterday();
 
         //then
         assertThat(newRecruitsAfterYesterday.size()).isEqualTo(2);

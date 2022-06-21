@@ -8,10 +8,12 @@ import com.flab.fire_inform.domains.recruit.dto.SimpleTextResponse;
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
 import com.flab.fire_inform.domains.recruit.service.RecruitService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -19,15 +21,22 @@ public class RecruitController {
 
     private final RecruitService recruitService;
     private final ObjectMapper objectMapper;
+    private final Map<String, String> companies = Map.of("kakao", "카카오");
 
     public RecruitController(RecruitService recruitService, ObjectMapper objectMapper) {
         this.recruitService = recruitService;
         this.objectMapper = objectMapper;
     }
 
-    @PostMapping("/api/new-recruits")
-    public CommonResponse getNewRecruitsAfterYesterdayByListCard() {
-        List<Recruit> findRecruits = recruitService.getNewRecruitsAfterYesterday();
+    @PostMapping("/api/new-recruits/{company}")
+    public CommonResponse getNewRecruitsAfterYesterdayByListCard(@PathVariable(name = "company") String company) {
+        List<Recruit> findRecruits;
+        if(company.equals("all")) {
+            findRecruits = recruitService.getAllRecruitsAfterYesterday();
+        } else {
+            findRecruits = recruitService.getRecruitsByCompanyAfterYesterday(companies.get(company));
+        }
+
         CommonResponse result;
         if(findRecruits.size() != 0) {
             result = ListCardResponse.of(findRecruits);
