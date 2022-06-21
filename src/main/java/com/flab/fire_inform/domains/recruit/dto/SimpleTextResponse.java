@@ -20,8 +20,9 @@ public class SimpleTextResponse implements CommonResponse{
     }
 
     public static SimpleTextResponse empty() {
+        String now = LocalDate.now().getMonthValue() + "월 " + LocalDate.now().getDayOfMonth() + "일";
         List<Output> outputs = new ArrayList<>();
-        outputs.add(new Output(new SimpleText("신규 추가된 채용공고가 존재하지 않습니다.")));
+        outputs.add(new Output(new SimpleText(now + " 신규 추가된 채용공고가 존재하지 않습니다.\n신규 채용정보는 매일 오전 8시에 업데이트됩니다.")));
 
         return new SimpleTextResponse("2.0", new Template(outputs));
     }
