@@ -17,11 +17,20 @@ public class RecruitService {
         this.recruitMapper = recruitMapper;
     }
 
-    public List<Recruit> getNewRecruitsAfterYesterday() {
+    public List<Recruit> getAllRecruitsAfterYesterday() {
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
 
         return recruitMapper.findAll().stream()
                 .filter(d -> d.getAddDateTime().isAfter(yesterday))
                 .collect(Collectors.toList());
+    }
+
+    public List<Recruit> getRecruitsByCompanyAfterYesterday(String company) {
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+
+        return recruitMapper.findByCompany(company).stream()
+                .filter(d -> d.getAddDateTime().isAfter(yesterday))
+                .collect(Collectors.toList());
+
     }
 }

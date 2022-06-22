@@ -1,28 +1,56 @@
 package com.flab.fire_inform.domains.recruit.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flab.fire_inform.domains.recruit.dto.CommonResponse;
+import com.flab.fire_inform.domains.recruit.dto.ListCardResponse;
+import com.flab.fire_inform.domains.recruit.dto.SimpleTextResponse;
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
 import com.flab.fire_inform.domains.recruit.service.RecruitService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@Slf4j
 public class RecruitController {
 
     private final RecruitService recruitService;
+    private final ObjectMapper objectMapper;
+    private final Map<String, String> companies = Map.of("kakao", "카카오");
 
-    public RecruitController(RecruitService recruitService) {
+    public RecruitController(RecruitService recruitService, ObjectMapper objectMapper) {
         this.recruitService = recruitService;
+        this.objectMapper = objectMapper;
     }
 
-    @GetMapping("/new-recruits")
-    public ResponseEntity<List<Recruit>> getNewRecruitsAfterYesterday() {
-        List<Recruit> findRecruits = recruitService.getNewRecruitsAfterYesterday();
-        return new ResponseEntity<>(findRecruits, HttpStatus.OK);
+    @PostMapping("/api/new-recruits/{company}")
+    public CommonResponse getNewRecruitsAfterYesterdayByListCard(@PathVariable(name = "company") String company) {
+        List<Recruit> findRecruits;
+        if(company.equals("all")) {
+            findRecruits = recruitService.getAllRecruitsAfterYesterday();
+        } else {
+            findRecruits = recruitService.getRecruitsByCompanyAfterYesterday(companies.get(company));
+        }
+
+        CommonResponse result;
+        if(findRecruits.size() != 0) {
+            result = ListCardResponse.of(findRecruits);
+        } else {
+            result = SimpleTextResponse.empty();
+        }
+
+        try {
+            String resultJson = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
+            log.info(resultJson);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }
