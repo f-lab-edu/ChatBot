@@ -16,7 +16,7 @@ public class Button implements Serializable {
     private final String action = "webLink";
     private final String webLinkUrl;
 
-    private Button(String webLinkUrl){
+    private Button ( String webLinkUrl ){
         this.webLinkUrl = webLinkUrl;
     }
 
