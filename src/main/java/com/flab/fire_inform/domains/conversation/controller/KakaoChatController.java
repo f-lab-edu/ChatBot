@@ -1,9 +1,9 @@
 package com.flab.fire_inform.domains.conversation.controller;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.flab.fire_inform.domains.conversation.dto.SkillResponse;
+import com.flab.fire_inform.domains.conversation.dto.SkillTemplate;
 import com.flab.fire_inform.domains.conversation.dto.newsList.*;
 import com.flab.fire_inform.domains.crawling.service.NewsCrawlling;
-import com.google.gson.JsonObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
