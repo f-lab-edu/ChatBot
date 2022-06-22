@@ -13,7 +13,8 @@ public enum ErrorCode {
     JOIN_FAIL(CONFLICT,"회원가입에 실패했습니다. 가입정보를 다시 확인해주세요."),
 
     // 뉴스 헤드라인 조회 관련 에러
-    DOMAIN_NOT_FOUND(BAD_REQUEST,"도메인을 선택해주셔야합니다.")
+    DOMAIN_NOT_FOUND(BAD_REQUEST,"도메인을 선택해주셔야합니다."),
+    COMPANY_NOT_FOUND(BAD_REQUEST,"정확한 회사명을 입력해주세요.")
     ;
 
     private final HttpStatus httpStatus;

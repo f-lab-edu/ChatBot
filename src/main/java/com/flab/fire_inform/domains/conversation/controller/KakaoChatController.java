@@ -1,28 +1,37 @@
 package com.flab.fire_inform.domains.conversation.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.fire_inform.domains.conversation.dto.SkillResponse;
 import com.flab.fire_inform.domains.conversation.dto.SkillTemplate;
 import com.flab.fire_inform.domains.conversation.dto.newsList.*;
+import com.flab.fire_inform.domains.crawling.dto.StockInformation;
 import com.flab.fire_inform.domains.crawling.service.NewsCrawlling;
+import com.flab.fire_inform.domains.crawling.util.GoogleStockCrawler;
+import com.flab.fire_inform.domains.crawling.util.StockCrawler;
+import com.flab.fire_inform.global.exception.CustomException;
+import com.flab.fire_inform.global.exception.error.ErrorCode;
+import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
+@Slf4j
 public class KakaoChatController {
     private final NewsCrawlling newsCrawlling;
+    private final StockCrawler stockCrawler;
 
-    public KakaoChatController(NewsCrawlling newsCrawlling){
+    public KakaoChatController(NewsCrawlling newsCrawlling, StockCrawler stockCrawler){
         this.newsCrawlling = newsCrawlling;
+        this.stockCrawler = stockCrawler;
     }
 
-    @RequestMapping(value = "/api/check/{domain}" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
+    @RequestMapping(value = "/api/news/{domain}" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
     public SkillResponse newsListAPI(@PathVariable(required = false) String domain,
                                      @RequestBody(required = false) Map<String, Object> params) throws IOException {
 
@@ -50,5 +59,21 @@ public class KakaoChatController {
         SkillResponse skillResponse = new SkillResponse("2.0", skillTemplate);
 
         return skillResponse;
+    }
+
+    @RequestMapping(value = "/api/stock", method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
+    public StockInformation getStockInfo(@RequestBody(required = false) Map<String, Object> params) {
+        StockInformation stockInformation;
+
+        log.info("params={}",params);
+        try{
+             stockInformation = stockCrawler.crawling(params);
+
+        }catch (Exception e){
+
+            throw new CustomException(ErrorCode.COMPANY_NOT_FOUND);
+
+        }
+        return stockInformation;
     }
 }
