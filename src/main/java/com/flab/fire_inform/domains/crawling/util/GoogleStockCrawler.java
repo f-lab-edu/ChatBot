@@ -21,14 +21,12 @@ public class GoogleStockCrawler implements StockCrawler {
 
     // 크롤링하는 책임만 가지고 있다.
     public StockInformation crawling(Map<String,Object> params) throws IOException {
-
+        Document doc;
         String seachUrlWithKeyword = gettingLinkFromKeyword(params);
-        Document doc = Jsoup.connect(seachUrlWithKeyword).get();
 
+        try{
+            doc = Jsoup.connect(seachUrlWithKeyword).get();
 
-        if ( doc == null ){
-            throw new CustomException(ErrorCode.COMPANY_NOT_FOUND);
-        }
 
         // HTML 구문 및 이름
         Element html = Objects.requireNonNull(doc.getElementsByClass("PZPZlf").get(4));
@@ -58,6 +56,9 @@ public class GoogleStockCrawler implements StockCrawler {
                                 .howDifferenttWithYesterday(diffrentWithYesterdatDate)
                                 .url(seachUrlWithKeyword)
                                 .build();
+        }catch (Exception e){
+            throw new CustomException(ErrorCode.COMPANY_NOT_FOUND);
+        }
     }
 
     // 받은 json 형식에서 사용자 발화 추출 후 검색 링크 반환
