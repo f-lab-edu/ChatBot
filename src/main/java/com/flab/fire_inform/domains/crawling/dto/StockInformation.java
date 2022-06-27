@@ -13,11 +13,14 @@ public class StockInformation {
     private final String date;
     private final String howDifferenttWithYesterday;
 
+    private final String url;
+
     private StockInformation(StockBuilder stockBuilder) {
         this.name = stockBuilder.name;
         this.price = stockBuilder.price;
         this.date = stockBuilder.date;
         this.howDifferenttWithYesterday = stockBuilder.howDifferenttWithYesterday;
+        this.url = stockBuilder.url;
     }
 
     public static StockBuilder builder(String name, String price){
@@ -29,6 +32,8 @@ public class StockInformation {
         private final String price;
         private  String date;
         private  String howDifferenttWithYesterday;
+
+        private String url;
         public StockBuilder(String name, String price){
             this.name = name;
             this.price = price;
@@ -43,6 +48,11 @@ public class StockInformation {
             this.howDifferenttWithYesterday = howDifferenttWithYesterday;
             return this;
         }
+        public StockBuilder url(String url){
+            this.url = url;
+            return this;
+        }
+
 
         public StockInformation build(){
             return new StockInformation(this);
