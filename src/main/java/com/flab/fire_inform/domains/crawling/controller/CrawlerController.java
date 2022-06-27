@@ -31,7 +31,7 @@ public class CrawlerController {
         jobCrawler.crawling();
     }
 
-    @PostMapping(value={"/api/news/{domain}"})
+    @PostMapping(value={"/api/check/{domain}"})
     public ResponseEntity getNewsList(@PathVariable(required = false) String domain) throws IOException {
 
         if(domain == null){
