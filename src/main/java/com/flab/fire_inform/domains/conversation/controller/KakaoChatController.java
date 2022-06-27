@@ -1,19 +1,12 @@
 package com.flab.fire_inform.domains.conversation.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.fire_inform.domains.conversation.dto.SkillResponse;
 import com.flab.fire_inform.domains.conversation.dto.SkillTemplate;
 import com.flab.fire_inform.domains.conversation.dto.newsList.*;
 import com.flab.fire_inform.domains.crawling.dto.StockInformation;
 import com.flab.fire_inform.domains.crawling.service.NewsCrawlling;
-import com.flab.fire_inform.domains.crawling.util.GoogleStockCrawler;
 import com.flab.fire_inform.domains.crawling.util.StockCrawler;
-import com.flab.fire_inform.global.exception.CustomException;
-import com.flab.fire_inform.global.exception.error.ErrorCode;
-import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONObject;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

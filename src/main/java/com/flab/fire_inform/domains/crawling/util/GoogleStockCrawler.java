@@ -25,7 +25,6 @@ public class GoogleStockCrawler implements StockCrawler {
         String seachUrlWithKeyword = gettingLinkFromKeyword(params);
         Document doc = Jsoup.connect(seachUrlWithKeyword).get();
 
-        log.info("doc={}",doc);
 
         if ( doc == null ){
             throw new CustomException(ErrorCode.COMPANY_NOT_FOUND);
@@ -35,7 +34,6 @@ public class GoogleStockCrawler implements StockCrawler {
         Element html = Objects.requireNonNull(doc.getElementsByClass("PZPZlf").get(4));
         String name = doc.getElementsByClass("PZPZlf").get(1).text();
 
-        log.info("html={}",html);
         // 가격.
         String price = html.getElementsByClass("IsqQVc NprOob wT3VGc").first().text()
                         + " " + html.getElementsByClass("knFDje").first().text();

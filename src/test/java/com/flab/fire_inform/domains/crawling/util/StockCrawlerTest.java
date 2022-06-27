@@ -14,10 +14,6 @@ public class StockCrawlerTest {
     @Test
     @DisplayName("주식 크롤러 테스트")
     void getStockPrice() throws IOException {
-        StockCrawler stockCrawler = new GoogleStockCrawler();
 
-        String word = "삼성";
-        StockInformation test =  stockCrawler.crawling(word);
-        Assertions.assertThat(test.getName()).isEqualTo("삼성전자");
     }
 }
