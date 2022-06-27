@@ -26,7 +26,8 @@ public class KakaoChatController {
     }
 
     @RequestMapping(value = "/api/news/{domain}" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
-    public SkillResponse newsListAPI(@PathVariable(required = false) String domain) throws IOException {
+    public SkillResponse newsListAPI(@PathVariable(required = false) String domain
+                                        ,@RequestBody(required = false) Map<String, Object> params) throws IOException {
 
         // header setting
         String url = newsCrawlling.convertURL(domain);
