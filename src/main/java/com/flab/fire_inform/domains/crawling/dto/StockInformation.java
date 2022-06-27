@@ -1,7 +1,5 @@
 package com.flab.fire_inform.domains.crawling.dto;
 
-import com.flab.fire_inform.domains.conversation.dto.newsList.ListItem;
-import com.flab.fire_inform.domains.crawling.util.StockCrawler;
 import lombok.Getter;
 import lombok.ToString;
 
