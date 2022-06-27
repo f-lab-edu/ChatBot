@@ -37,6 +37,7 @@ public class CrawlerController {
         if(domain == null){
             throw new CustomException(ErrorCode.DOMAIN_NOT_FOUND);
         }
+
         //도메인 등록
         return new ResponseEntity(newsCrawlling.getNewsContents(domain), HttpStatus.OK);
     }

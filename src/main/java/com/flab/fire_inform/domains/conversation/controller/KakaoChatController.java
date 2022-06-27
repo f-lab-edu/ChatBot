@@ -10,6 +10,7 @@ import com.flab.fire_inform.domains.crawling.util.GoogleStockCrawler;
 import com.flab.fire_inform.domains.crawling.util.StockCrawler;
 import com.flab.fire_inform.global.exception.CustomException;
 import com.flab.fire_inform.global.exception.error.ErrorCode;
+import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
@@ -32,8 +33,7 @@ public class KakaoChatController {
     }
 
     @RequestMapping(value = "/api/news/{domain}" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
-    public SkillResponse newsListAPI(@PathVariable(required = false) String domain,
-                                     @RequestBody(required = false) Map<String, Object> params) throws IOException {
+    public SkillResponse newsListAPI(@PathVariable(required = false) String domain) throws IOException {
 
         // header setting
         String url = newsCrawlling.convertURL(domain);
@@ -44,10 +44,10 @@ public class KakaoChatController {
         List<ListItem> items = newsCrawlling.getNewsListForKaKao(url).subList(0,4);
 
         // 버튼 리스트 생성
-        List<Button> buttons = Button.list(url);
+        List<Button> buttons = Button.list(url,"더 보기");
 
         // 여기는 listCard 생성
-        ListCard listCard = new ListCard(header, items, buttons);
+        ListCard listCard = ListCard.builder(header, items).buttons(buttons).build();
         HashMap<String,ListCard> listcardHashMap = new HashMap<>();
         listcardHashMap.put("listCard",listCard);
 
@@ -62,18 +62,33 @@ public class KakaoChatController {
     }
 
     @RequestMapping(value = "/api/stock", method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
-    public StockInformation getStockInfo(@RequestBody(required = false) Map<String, Object> params) {
-        StockInformation stockInformation;
+    public SkillResponse getStockInfo(@RequestBody(required = false) Map<String, Object> params) throws IOException {
 
         log.info("params={}",params);
-        try{
-             stockInformation = stockCrawler.crawling(params);
 
-        }catch (Exception e){
+        StockInformation stockInformation = stockCrawler.crawling(params);
 
-            throw new CustomException(ErrorCode.COMPANY_NOT_FOUND);
+        // header setting
+        String date = DateTimeFormatter.ofPattern("MM월 dd일(E) ").format(LocalDateTime.now()) + stockInformation.getName() +" 주식";
+        ListItem header = ListItem.builder(date).build();
 
-        }
-        return stockInformation;
+        List<ListItem> items = new ArrayList<>();
+        items.add(ListItem.builder(stockInformation.getPrice()).description(stockInformation.getHowDifferenttWithYesterday()).build());
+
+        List<Button> buttons = Button.list(stockInformation.getUrl(),"차트 보러가기");
+
+        ListCard listCard = ListCard.builder(header, items).buttons(buttons).build();
+        HashMap<String,ListCard> listcardHashMap = new HashMap<>();
+        listcardHashMap.put("listCard",listCard);
+
+        List<HashMap<String,ListCard>> listCards = new ArrayList();
+        listCards.add(listcardHashMap);
+
+
+        SkillTemplate skillTemplate = new SkillTemplate(listCards);
+        SkillResponse skillResponse = new SkillResponse("2.0", skillTemplate);
+
+
+        return skillResponse;
     }
 }
