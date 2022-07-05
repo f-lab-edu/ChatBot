@@ -48,8 +48,8 @@
             , #{address}
             , #{workerType}
             , #{link}
-            , #{addDateTime}
-            , #{updateDateTime}
+            , NOW()
+            , NOW()
         )
     </insert>
 
@@ -63,7 +63,7 @@
     <update id="update" parameterType="recruit" useGeneratedKeys="true" keyProperty="id">
         UPDATE
             recruit
-        set
+        SET
             title = #{title}
             , career = #{career}
             , due_date = #{dueDate}
@@ -71,8 +71,44 @@
             , address = #{address}
             , worker_type = #{workerType}
             , link = #{link}
-            , update_date_time = #{updateDateTime}
+            , update_date_time = NOW()
         WHERE
             id = #{id}
     </update>
+
+    <insert id="upsertRecruits" parameterType="recruit" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+            recruit(
+                title
+                , career
+                , due_date
+                , company
+                , address
+                , worker_type
+                , link
+                , add_date_time
+                , update_date_time
+            )
+        VALUES(
+            #{title}
+            , #{career}
+            , #{dueDate}
+            , #{company}
+            , #{address}
+            , #{workerType}
+            , #{link}
+            , NOW()
+            , NOW()
+        )
+        ON DUPLICATE KEY
+        UPDATE
+            title = #{title}
+            , career = #{career}
+            , due_date = #{dueDate}
+            , company = #{company}
+            , address = #{address}
+            , worker_type = #{workerType}
+            , link = #{link}
+            , update_date_time = NOW()
+    </insert>
 </mapper>
