@@ -16,18 +16,18 @@ import java.util.Objects;
 
 @Slf4j
 @Component
-public class KakaoCrawler implements JobCrawler {
+public class KakaoRecruitCrawler implements JobCrawler {
 
     private final RecruitMapper recruitMapper;
 
-    public KakaoCrawler(RecruitMapper recruitMapper) {
+    public KakaoRecruitCrawler(RecruitMapper recruitMapper) {
         this.recruitMapper = recruitMapper;
     }
 
     @Override
     public void crawling() {
         try {
-            log.info("================== Kakao Crawling Start ===================");
+            log.info("================== Kakao Recruits Crawling Start ===================");
             String kakaoUrl = "https://careers.kakao.com";
 
             int totalPage = getTotalPage(kakaoUrl);
@@ -50,19 +50,17 @@ public class KakaoCrawler implements JobCrawler {
             log.info("recruitsToUpdate.size = {}", recruitsToUpdate.size());
 
             for (Recruit recruit : recruitsToAdd) {
-                recruit.setAddDateTimeToNow();
-                recruit.setUpdateDateTimeToNow();
                 recruitMapper.save(recruit);
             }
 
             for (Recruit recruit : recruitsToUpdate) {
-                recruit.setUpdateDateTimeToNow();
                 recruitMapper.update(recruit);
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            log.info("================== Kakao Crawling End =====================");
+            log.info("================== Kakao Recruits Crawling End =====================");
         }
     }
 
@@ -136,7 +134,7 @@ public class KakaoCrawler implements JobCrawler {
                     .dueDate(dueDate)
                     .address(address)
                     .workerType(workerType)
-                    .Build());
+                    .build());
         }
     }
 

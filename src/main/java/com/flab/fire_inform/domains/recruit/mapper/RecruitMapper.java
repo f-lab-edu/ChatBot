@@ -19,4 +19,6 @@ public interface RecruitMapper {
     void deleteById(Long id);
 
     void update(Recruit recruit);
+
+    void upsertRecruits(Recruit crawledRecruits);
 }

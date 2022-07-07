@@ -23,7 +23,7 @@ public class ListCardResponse implements CommonResponse {
         String now = LocalDate.now().getMonthValue() + "월 " + LocalDate.now().getDayOfMonth() + "일";
         List<Output> outputs = new ArrayList<>();
         int totalCount = recruits.size();
-        int totalPage = totalCount / 5 + 1;
+        int totalPage = totalCount % 5 == 0 ? totalCount / 5 : totalCount / 5 + 1;
         int currentPage = 1;
         int currentIndex = 0;
         log.info("totalCount: {}", totalCount);

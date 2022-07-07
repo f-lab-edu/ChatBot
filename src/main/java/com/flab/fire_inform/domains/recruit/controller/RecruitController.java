@@ -21,7 +21,7 @@ public class RecruitController {
 
     private final RecruitService recruitService;
     private final ObjectMapper objectMapper;
-    private final Map<String, String> companies = Map.of("kakao", "카카오");
+    private final Map<String, String> companies = Map.of("kakao", "카카오", "naver", "네이버");
 
     public RecruitController(RecruitService recruitService, ObjectMapper objectMapper) {
         this.recruitService = recruitService;
