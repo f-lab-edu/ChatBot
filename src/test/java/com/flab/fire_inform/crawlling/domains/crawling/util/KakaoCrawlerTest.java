@@ -1,4 +1,4 @@
-package com.flab.fire_inform.domains.crawling.util;
+package com.flab.fire_inform.crawlling.domains.crawling.util;
 
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
 import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
