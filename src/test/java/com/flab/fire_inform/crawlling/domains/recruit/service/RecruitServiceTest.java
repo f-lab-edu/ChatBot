@@ -30,13 +30,13 @@ class RecruitServiceTest {
         //given
         Recruit recruit1 = new Recruit.Builder("testTitle1", "testCompany1", "testLink1")
                 .addDateTime(LocalDateTime.now().minusHours(1))
-                .Build();
+                .build();
         Recruit recruit2 = new Recruit.Builder("testTitle2", "testCompany2", "testLink2")
                 .addDateTime(LocalDateTime.now().minusHours(1))
-                .Build();
+                .build();
         Recruit recruit3 = new Recruit.Builder("testTitle3", "testCompany3", "testLink3")
                 .addDateTime(LocalDateTime.now().minusDays(7))
-                .Build();
+                .build();
         when(recruitService.getAllRecruitsAfterYesterday()).thenReturn(Arrays.asList(recruit1, recruit2));
 
         //when
