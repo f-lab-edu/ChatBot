@@ -2,6 +2,8 @@ package com.flab.fire_inform.domains.crawling.service;
 import com.flab.fire_inform.domains.conversation.dto.newsList.Link;
 import com.flab.fire_inform.domains.conversation.dto.newsList.ListItem;
 import com.flab.fire_inform.domains.crawling.dto.EconomyNewsUrl;
+import com.flab.fire_inform.domains.crawling.dto.entity.News;
+import com.flab.fire_inform.domains.crawling.mapper.NewsMapper;
 import com.flab.fire_inform.global.exception.CustomException;
 import com.flab.fire_inform.global.exception.error.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
@@ -10,14 +12,21 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
 public class NaverNewsCrawllingImpl implements NewsCrawlling {
+
+    private NewsMapper newsMapper;
+    public NaverNewsCrawllingImpl(NewsMapper newsMapper){
+        this.newsMapper = newsMapper;
+    }
     /**
      * @return newsList
      * @throws IOException
@@ -55,8 +64,16 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
 
     /**
     템플릿에 담아서 반환해주는 뉴스 목록 for Kakao
+     - Url에 따라 페이지 수 체크
+     - 모든 컨텐츠를 다 가져온다.\
+     - 필요한 헤드와 짧은 내용, Url을 가져온다.
+     - News객체를 만들어서 db에 저장
+     - content가 제대로 조회되어 오면 바로 저장하고 반환
+     -
      **/
-    public List<ListItem> getNewsListForKaKao(String url) throws IOException {
+    public List<ListItem> getNewsListForKaKao(String url, String domain) throws IOException {
+        // try- catch는 이전에 저장된 데이터를 반환해주기 위해서
+        try{
         List<ListItem> itemList = new ArrayList<>();
         int size = getPgaing(url);
 
@@ -80,6 +97,7 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
                 contents = doc.select("tr > td.content > div.content > div.list_body > ul > li > dl > dt:not(.photo) > a");
 
             }
+
             for (Element content : contents) {
 
                 Link link = new Link(content.absUrl("href"));
@@ -87,10 +105,55 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
 
                 itemList.add(ListItem.builder(contentss).link(link).build());
             }
+
+            // 혹시 넘어올 경우 대비
+            if(itemList.isEmpty()){
+                itemList = getNewsList("NAVER",domain);
+            }
+
+            if(!itemList.isEmpty() && !getNewsList("NAVER",domain).isEmpty()) {
+                delete("NAVER",domain);
+            }
+
+            saveNewsList(itemList,url,domain);
+
         }
 
         log.info("[NaverNesCrawllingImpl] :::::: textList ={}", itemList.toString());
         return itemList;
+
+        }catch (IOException e){
+            // 크롤링에서 문제가 생기면 디비에서 가장 최근 데이터 조회
+            return getNewsList("NAVER",domain);
+        }
+    }
+
+    @Transactional
+    public boolean saveNewsList( List<ListItem> itemList , String url, String domain) {
+        for ( ListItem item : itemList) {
+            News news = News.builder("NAVER", domain, item.getTitle(), item.getLink().getWeb(),url).build();
+            newsMapper.insertNewsList(news);
+        }
+        return true;
+    }
+    @Transactional
+    public boolean delete(String site, String domain){
+
+        newsMapper.deleteNewsList(site,domain);
+
+        return true;
+    }
+
+    public List<ListItem> getNewsList(String site,String domain){
+        List<ListItem> returnList = new ArrayList<>();
+        List<News> list = newsMapper.getNewsList(site,domain);
+
+        for ( News news : list){
+            ListItem listItem = ListItem.builder(news.getTitle()).link(new Link(news.getLink())).imageUrl(news.getNewsTotalUrl()).build();
+            returnList.add(listItem);
+        }
+
+        return returnList;
     }
 
 
@@ -117,35 +180,17 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
      */
     @Override
     public String convertURL(String domain){
-        if(domain.equals("MAIN")){
-            return EconomyNewsUrl.MAIN.getUrl();
-        }
-        if(domain.equals("FINANCE")){
-            return EconomyNewsUrl.FINANCE.getUrl();
-        }
-        if(domain.equals("STOCK")){
-            return EconomyNewsUrl.STOCK.getUrl();
-        }
-        if(domain.equals("INDUSTRY")){
-            return EconomyNewsUrl.INDUSTRY.getUrl();
-        }
-        if(domain.equals("VENTURE")){
-            return EconomyNewsUrl.VENTURE.getUrl();
-        }
-        if(domain.equals("ESTATE")){
-            return EconomyNewsUrl.ESTATE.getUrl();
-        }
-        if(domain.equals("GLOBAL")){
-            return EconomyNewsUrl.GLOBAL.getUrl();
-        }
-        if(domain.equals("LIFE")){
-            return EconomyNewsUrl.LIFE.getUrl();
-        }
-        if(domain.equals("ORDINARY")){
-            return EconomyNewsUrl.ORDINARY.getUrl();
+        // optional 연습겸 사용
+        try{
+            Optional<String> optionalMain = Optional.of(domain);
+            return EconomyNewsUrl.valueOf(optionalMain.orElseThrow(()
+                                         -> new CustomException(ErrorCode.DOMAIN_NOT_FOUND))).getUrl();
+        }catch (IllegalArgumentException e){
+            throw new CustomException(ErrorCode.DOMAIN_NOT_FOUND);
         }
 
-        throw new CustomException(ErrorCode.DOMAIN_NOT_FOUND) ;
+        /* url로 domain 추출
+        List<EconomyNewsUrl> collect = Arrays.stream(EconomyNewsUrl.values()).filter(economyNewsUrl -> url.equals(economyNewsUrl.getUrl())).collect(Collectors.toList());
+        EconomyNewsUrl economyNewsUrl = collect.get(0); */
     }
-
 }

@@ -1,7 +1,8 @@
-package com.flab.fire_inform.domains.recruit.service;
+package com.flab.fire_inform.crawlling.domains.recruit.service;
 
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
 import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
+import com.flab.fire_inform.domains.recruit.service.RecruitService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

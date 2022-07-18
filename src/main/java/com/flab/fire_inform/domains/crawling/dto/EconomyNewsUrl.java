@@ -1,5 +1,7 @@
 package com.flab.fire_inform.domains.crawling.dto;
 
+import java.util.Arrays;
+
 public enum EconomyNewsUrl {
     MAIN("https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101"),
     FINANCE("https://news.naver.com/main/list.naver?mode=LS2D&mid=shm&sid1=101&sid2=259"),
@@ -16,6 +18,12 @@ public enum EconomyNewsUrl {
     }
     public String getUrl(){
         return url;
+    }
+    public static EconomyNewsUrl valueOfLabel(String url) {
+        return Arrays.stream(values())
+                .filter(value -> value.url.equals(url))
+                .findAny()
+                .orElse(null);
     }
 
 }

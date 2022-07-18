@@ -9,4 +9,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Link {
     private final String web;
+
+    public Link toLink(String link){
+        return new Link(link);
+    }
 }

@@ -25,7 +25,7 @@ public class GoogleStockCrawler implements StockCrawler {
         String seachUrlWithKeyword = gettingLinkFromKeyword(params);
 
         try{
-            doc = Jsoup.connect(seachUrlWithKeyword).get();
+        doc = Jsoup.connect(seachUrlWithKeyword).get();
 
 
         // HTML 구문 및 이름

@@ -1,9 +1,12 @@
-package com.flab.fire_inform.crawlling;
+package com.flab.fire_inform.crawlling.domains.news;
 
+import com.flab.fire_inform.crawlling.domains.crawling.util.StockCrawlerTest;
 import com.flab.fire_inform.domains.conversation.dto.newsList.ListItem;
 import com.flab.fire_inform.domains.crawling.dto.EconomyNewsUrl;
+import com.flab.fire_inform.domains.crawling.dto.StockInformation;
 import com.flab.fire_inform.domains.crawling.service.NaverNewsCrawllingImpl;
 import com.flab.fire_inform.domains.crawling.service.NewsCrawlling;
+import com.flab.fire_inform.global.exception.CustomException;
 import com.flab.fire_inform.global.exception.error.ErrorCode;
 import com.flab.fire_inform.global.response.Response;
 import org.assertj.core.api.Assertions;
@@ -13,16 +16,31 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.IOException;
+import java.lang.module.FindException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
+
 @SpringBootTest
+@WebAppConfiguration
 public class NewsCrawllingTest {
 
     static String url = "https://news.naver.com/main/list.naver?mode=LS2D&mid=shm&sid1=101&sid2=259";
+    @Autowired
+    NewsCrawlling newsCrawlling;
+
+   /* public NewsCrawllingTest(NewsCrawlling newsCrawlling){
+        this.newsCrawlling = newsCrawlling;
+    }*/
 
     @Test
     @DisplayName("크롤링 테스트")
@@ -49,22 +67,6 @@ public class NewsCrawllingTest {
             System.out.println("arr = " + arr);
         }
     }
-
-    @Test
-    @DisplayName("kakao Crawling Test")
-    void kakaoTest() throws IOException{
-        NewsCrawlling newsCrawlling = new NaverNewsCrawllingImpl();
-
-        String newsUrl = newsCrawlling.convertURL("FINANCE");
-
-        List<ListItem> items = newsCrawlling.getNewsListForKaKao(newsUrl);
-
-        for(ListItem item : items){
-
-        }
-    }
-
-
     @Test
     @DisplayName("페이지 개수 제공")
     void getPage() throws IOException {
@@ -76,21 +78,12 @@ public class NewsCrawllingTest {
         System.out.println("paging = " + paging);
     }
 
-    @Test
-    @DisplayName("서비스 작동 여부 체크")
-    void servicetest() throws IOException {
-        NewsCrawlling nnc = new NaverNewsCrawllingImpl();
-        url = EconomyNewsUrl.FINANCE.getUrl();
-        List<String> contentList = nnc.getNewsContents(url);
-        for (String arr : contentList) {
-            System.out.println("arr = " + arr);
-        }
-    }
-
-    @Test
-    @DisplayName("url enum 테스트 ")
-    void testEnumEconomy() {
-        Assertions.assertThat(EconomyNewsUrl.FINANCE.getUrl()).isEqualTo("https://news.naver.com/main/list.naver?mode=LS2D&mid=shm&sid1=101&sid2=259");
+    @ParameterizedTest(name = "{index}, {displayName}, message={0}")
+    @DisplayName("url enum convert 테스트 ")
+    @ValueSource(strings = {"MAIN","FINANCE","STOCK"})
+    void testEnumEconomy(String domain) {
+       String url = newsCrawlling.convertURL(domain);
+       assertThat(EconomyNewsUrl.valueOf(domain).getUrl()).isEqualTo(url);
     }
 
     @Test
@@ -120,9 +113,5 @@ public class NewsCrawllingTest {
     }
 
 
-    @Test
-    @DisplayName("Redis 저장소 테스트")
-    void testRedisSession(){
-        List<String> news = new ArrayList<>();
-    }
+
 }

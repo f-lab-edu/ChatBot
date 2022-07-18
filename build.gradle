@@ -14,7 +14,6 @@ configurations {
 	}
 }
 
-
 repositories {
 	mavenCentral()
 }
@@ -35,6 +34,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.webjars:sockjs-client:1.0.2'
 	implementation 'org.webjars:stomp-websocket:2.3.3'
+
+	// 로git add 'conflicted file name'그백 쿼리 로그 설정
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 
 	// Jsoup
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
