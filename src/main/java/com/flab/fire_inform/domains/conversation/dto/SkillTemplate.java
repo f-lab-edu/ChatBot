@@ -11,10 +11,10 @@ import java.util.List;
 @ToString
 @Getter
 
-public class SkillTemplate<T> {
-    private T outputs;
+public class SkillTemplate<T extends Component> {
+    private List<T> outputs;
 
-    public SkillTemplate(T t){
+    public SkillTemplate(List<T> t){
         this.outputs = t;
     }
 }

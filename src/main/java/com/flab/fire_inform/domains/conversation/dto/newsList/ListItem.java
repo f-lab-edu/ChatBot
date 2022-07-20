@@ -10,7 +10,6 @@ import lombok.ToString;
 public class ListItem {
     private final String title;
     private final String description;
-
     private final String imageUrl;
     private final Link link;
 
