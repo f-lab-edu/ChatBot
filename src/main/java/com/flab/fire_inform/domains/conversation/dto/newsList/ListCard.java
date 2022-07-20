@@ -1,5 +1,6 @@
 package com.flab.fire_inform.domains.conversation.dto.newsList;
 
+import com.flab.fire_inform.domains.conversation.dto.Component;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -9,10 +10,10 @@ import java.util.List;
 
 @ToString
 @Getter
-public class ListCard implements Serializable {
+public class ListCard implements Serializable, Component {
 
     private final ListItem header;
-    private final List items;
+    private final List<ListItem> items;
     private  List<Button> buttons;
 
     public ListCard(ListCardBuilder listCardBuilder) {
