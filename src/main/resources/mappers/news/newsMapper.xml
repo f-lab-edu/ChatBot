@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.flab.fire_inform.domains.crawling.mapper.NewsMapper">
+<mapper namespace="com.flab.fire_inform.domains.news.mapper.NewsMapper">
 
     <select id="getNewsList" parameterType="String" resultType="news">
         select *

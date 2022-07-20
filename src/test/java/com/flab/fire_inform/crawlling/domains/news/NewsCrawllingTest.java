@@ -1,15 +1,9 @@
 package com.flab.fire_inform.crawlling.domains.news;
 
-import com.flab.fire_inform.crawlling.domains.crawling.util.StockCrawlerTest;
-import com.flab.fire_inform.domains.conversation.dto.newsList.ListItem;
 import com.flab.fire_inform.domains.crawling.dto.EconomyNewsUrl;
-import com.flab.fire_inform.domains.crawling.dto.StockInformation;
-import com.flab.fire_inform.domains.crawling.service.NaverNewsCrawllingImpl;
-import com.flab.fire_inform.domains.crawling.service.NewsCrawlling;
-import com.flab.fire_inform.global.exception.CustomException;
+import com.flab.fire_inform.domains.news.service.NewsCrawlling;
 import com.flab.fire_inform.global.exception.error.ErrorCode;
 import com.flab.fire_inform.global.response.Response;
-import org.assertj.core.api.Assertions;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.IOException;
-import java.lang.module.FindException;
 import java.util.ArrayList;
 import java.util.List;
 

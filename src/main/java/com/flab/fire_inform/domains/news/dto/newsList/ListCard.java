@@ -1,11 +1,10 @@
-package com.flab.fire_inform.domains.conversation.dto.newsList;
+package com.flab.fire_inform.domains.news.dto.newsList;
 
-import com.flab.fire_inform.domains.conversation.dto.Component;
+import com.flab.fire_inform.domains.news.dto.Component;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.List;
 
 @ToString

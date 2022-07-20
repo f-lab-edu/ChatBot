@@ -1,4 +1,4 @@
-package com.flab.fire_inform.domains.crawling.mapper;
+package com.flab.fire_inform.domains.news.mapper;
 
 import com.flab.fire_inform.domains.crawling.dto.entity.News;
 import org.apache.ibatis.annotations.Mapper;

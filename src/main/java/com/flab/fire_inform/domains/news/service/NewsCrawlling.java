@@ -1,6 +1,6 @@
-package com.flab.fire_inform.domains.crawling.service;
+package com.flab.fire_inform.domains.news.service;
 
-import com.flab.fire_inform.domains.conversation.dto.newsList.ListItem;
+import com.flab.fire_inform.domains.news.dto.newsList.ListItem;
 
 import java.io.IOException;
 import java.util.List;

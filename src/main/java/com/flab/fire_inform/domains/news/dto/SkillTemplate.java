@@ -1,11 +1,8 @@
-package com.flab.fire_inform.domains.conversation.dto;
+package com.flab.fire_inform.domains.news.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.List;
 
 @ToString

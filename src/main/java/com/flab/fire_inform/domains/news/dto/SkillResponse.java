@@ -1,4 +1,4 @@
-package com.flab.fire_inform.domains.conversation.dto;
+package com.flab.fire_inform.domains.news.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

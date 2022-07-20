@@ -1,10 +1,10 @@
-package com.flab.fire_inform.domains.conversation.controller;
+package com.flab.fire_inform.domains.news.controller;
 
-import com.flab.fire_inform.domains.conversation.dto.SkillResponse;
-import com.flab.fire_inform.domains.conversation.dto.SkillTemplate;
-import com.flab.fire_inform.domains.conversation.dto.newsList.*;
+import com.flab.fire_inform.domains.news.dto.SkillResponse;
+import com.flab.fire_inform.domains.news.dto.SkillTemplate;
+import com.flab.fire_inform.domains.news.dto.newsList.*;
 import com.flab.fire_inform.domains.crawling.dto.StockInformation;
-import com.flab.fire_inform.domains.crawling.service.NewsCrawlling;
+import com.flab.fire_inform.domains.news.service.NewsCrawlling;
 import com.flab.fire_inform.domains.crawling.util.StockCrawler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

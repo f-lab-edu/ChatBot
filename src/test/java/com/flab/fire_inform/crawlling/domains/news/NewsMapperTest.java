@@ -1,11 +1,9 @@
 package com.flab.fire_inform.crawlling.domains.news;
 
-import com.flab.fire_inform.domains.conversation.dto.newsList.ListItem;
-import com.flab.fire_inform.domains.crawling.dto.EconomyNewsUrl;
+import com.flab.fire_inform.domains.news.dto.newsList.ListItem;
 import com.flab.fire_inform.domains.crawling.dto.entity.News;
-import com.flab.fire_inform.domains.crawling.mapper.NewsMapper;
-import com.flab.fire_inform.domains.crawling.service.NaverNewsCrawllingImpl;
-import com.flab.fire_inform.global.exception.error.ErrorCode;
+import com.flab.fire_inform.domains.news.mapper.NewsMapper;
+import com.flab.fire_inform.domains.news.service.NaverNewsCrawllingImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

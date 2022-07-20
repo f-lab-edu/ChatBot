@@ -1,9 +1,9 @@
-package com.flab.fire_inform.domains.crawling.service;
-import com.flab.fire_inform.domains.conversation.dto.newsList.Link;
-import com.flab.fire_inform.domains.conversation.dto.newsList.ListItem;
+package com.flab.fire_inform.domains.news.service;
+import com.flab.fire_inform.domains.news.dto.newsList.Link;
+import com.flab.fire_inform.domains.news.dto.newsList.ListItem;
 import com.flab.fire_inform.domains.crawling.dto.EconomyNewsUrl;
 import com.flab.fire_inform.domains.crawling.dto.entity.News;
-import com.flab.fire_inform.domains.crawling.mapper.NewsMapper;
+import com.flab.fire_inform.domains.news.mapper.NewsMapper;
 import com.flab.fire_inform.global.exception.CustomException;
 import com.flab.fire_inform.global.exception.error.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
