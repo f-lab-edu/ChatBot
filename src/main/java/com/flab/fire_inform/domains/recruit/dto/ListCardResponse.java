@@ -7,12 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Slf4j
 public class ListCardResponse implements CommonResponse {
     private final String version;
     private final Template template;
+    private static final Map<String, String> logoUrlMap = Map.of("카카오", "https://t1.kakaocdn.net/kakaocorp/corp_thumbnail/Kakao.png", "네이버", "https://blog.kakaocdn.net/dn/XEAGa/btqB10c0bQ1/RZk86MYViwrP4OaBdpfhn0/img.png");
 
     private ListCardResponse(String version, Template template) {
         this.version = version;
@@ -54,7 +56,7 @@ public class ListCardResponse implements CommonResponse {
                     sb.append("/").append(recruit.getAddress());
                 }
 
-                Item item = new Item(recruit.getTitle(), sb.toString(), new Link(recruit.getLink()));
+                Item item = new Item(recruit.getTitle(), sb.toString(), logoUrlMap.get(recruit.getCompany()), new Link(recruit.getLink()));
                 items.add(item);
                 if(i == totalCount - 1 || i - currentIndex == 4) {
                     outputs.add(new Output(new ListCard(new Header(now + " 신규 채용 공고 (" + currentPage++ + "/" + totalPage + ")"), items)));
@@ -109,11 +111,13 @@ public class ListCardResponse implements CommonResponse {
     private static class Item {
         private final String title;
         private final String description;
+        private final String imageUrl;
         private final Link link;
 
-        private Item(String title, String description, Link link) {
+        public Item(String title, String description, String imageUrl, Link link) {
             this.title = title;
             this.description = description;
+            this.imageUrl = imageUrl;
             this.link = link;
         }
     }
