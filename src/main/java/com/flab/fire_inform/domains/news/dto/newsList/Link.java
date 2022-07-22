@@ -1,4 +1,4 @@
-package com.flab.fire_inform.domains.conversation.dto.newsList;
+package com.flab.fire_inform.domains.news.dto.newsList;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,4 +9,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Link {
     private final String web;
+
+    public Link toLink(String link){
+        return new Link(link);
+    }
 }

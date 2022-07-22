@@ -1,6 +1,5 @@
-package com.flab.fire_inform.domains.conversation.dto.newsList;
+package com.flab.fire_inform.domains.news.dto.newsList;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -9,7 +8,6 @@ import lombok.ToString;
 public class ListItem {
     private final String title;
     private final String description;
-
     private final String imageUrl;
     private final Link link;
 

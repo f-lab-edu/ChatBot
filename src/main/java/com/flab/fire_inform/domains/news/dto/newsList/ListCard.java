@@ -1,18 +1,18 @@
-package com.flab.fire_inform.domains.conversation.dto.newsList;
+package com.flab.fire_inform.domains.news.dto.newsList;
 
+import com.flab.fire_inform.domains.news.dto.Component;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.List;
 
 @ToString
 @Getter
-public class ListCard implements Serializable {
+public class ListCard implements Serializable, Component {
 
     private final ListItem header;
-    private final List items;
+    private final List<ListItem> items;
     private  List<Button> buttons;
 
     public ListCard(ListCardBuilder listCardBuilder) {

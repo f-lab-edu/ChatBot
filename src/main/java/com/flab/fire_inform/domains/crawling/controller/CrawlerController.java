@@ -1,6 +1,6 @@
 package com.flab.fire_inform.domains.crawling.controller;
 
-import com.flab.fire_inform.domains.crawling.service.NewsCrawlling;
+import com.flab.fire_inform.domains.news.service.NewsCrawlling;
 import com.flab.fire_inform.domains.crawling.util.JobCrawler;
 import com.flab.fire_inform.global.exception.CustomException;
 import com.flab.fire_inform.global.exception.error.ErrorCode;

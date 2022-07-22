@@ -1,0 +1,29 @@
+<configuration>
+    <!-- STDOUT(콘솔에 로그를 출력) -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-3level %logger{5} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+
+
+    <!-- log4jdbc 옵션 설정 -->
+    <logger name="jdbc" level="OFF"/>
+    <!-- sql문만 로깅할지 여부 -->
+    <logger name="jdbc.sqlonly" level="OFF"/>
+    <!-- 쿼리문 수행시간 로깅 여부 -->
+    <logger name="jdbc.sqltiming" level="DEBUG"/>
+    <!-- ResultSet외 모든 JDBC 호출 정보 로깅할지 여부 -->
+    <logger name="jdbc.audit" level="OFF"/>
+    <!-- ResultSet 포함 모든 JDBC 호출 정보를 로깅 -->
+    <logger name="jdbc.resultset" level="OFF"/>
+    <logger name="jdbc.resultsettable" level="DEBUG"/>
+    <!-- connection open close 로깅 여부 -->
+    <logger name="jdbc.connection" level="OFF"/>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
