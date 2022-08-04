@@ -75,7 +75,7 @@ public class NewsCrawllingTest {
     @DisplayName("url enum convert 테스트 ")
     @ValueSource(strings = {"MAIN","FINANCE","STOCK"})
     void testEnumEconomy(String domain) {
-       String url = newsCrawlling.convertURL(domain);
+       String url = EconomyNewsUrl.valueOf(domain).getUrl();
        assertThat(EconomyNewsUrl.valueOf(domain).getUrl()).isEqualTo(url);
     }
 

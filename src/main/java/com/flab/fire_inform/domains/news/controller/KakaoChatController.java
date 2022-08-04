@@ -1,11 +1,16 @@
 package com.flab.fire_inform.domains.news.controller;
 
+import com.flab.fire_inform.domains.crawling.dto.EconomyNewsUrl;
 import com.flab.fire_inform.domains.news.dto.SkillResponse;
 import com.flab.fire_inform.domains.news.dto.SkillTemplate;
 import com.flab.fire_inform.domains.news.dto.newsList.*;
 import com.flab.fire_inform.domains.crawling.dto.StockInformation;
+import com.flab.fire_inform.domains.news.mapper.NewsMapper;
+import com.flab.fire_inform.domains.news.service.NaverNewsCrawllingImpl;
 import com.flab.fire_inform.domains.news.service.NewsCrawlling;
 import com.flab.fire_inform.domains.crawling.util.StockCrawler;
+import com.flab.fire_inform.global.exception.CustomException;
+import com.flab.fire_inform.global.exception.error.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +40,9 @@ public class KakaoChatController {
         ListItem header = ListItem.builder(date).build();
 
         // 본문 아이템 리스트
-        String url = newsCrawlling.convertURL(domain);
+        Optional<String> optionalMain = Optional.of(domain);
+        String url = EconomyNewsUrl.valueOf(optionalMain.orElseThrow(()
+                -> new CustomException(ErrorCode.DOMAIN_NOT_FOUND))).getUrl();
         List<ListItem> items = newsCrawlling.getNewsListForKaKao(url,domain).subList(0,4);
 
         // 버튼 리스트 생성
@@ -64,8 +71,6 @@ public class KakaoChatController {
 
         return listCardSkillResponse(header,items,buttons);
     }
-
-
 
     private SkillResponse listCardSkillResponse(ListItem header, List<ListItem> items, List<Button> buttons){
 
