@@ -14,6 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -50,8 +51,9 @@ public class NewsMapperTest {
         News news = News.builder("NAVER","FINANCE","메인 본문","http://www.test.com","https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101")
                 .build();
         list.add(news);
-        list.add(news);
+
         when(newsMapperMock.getNewsList("NAVER","MAIN")).thenReturn(list);
+
         List<News> news2 = newsMapperMock.getNewsList("NAVER","MAIN");
         for ( News oneNews : news2){
             assertThat(oneNews.getNewsTotalUrl()).isEqualTo("https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101");
@@ -76,7 +78,7 @@ public class NewsMapperTest {
                 .build();
         int insertResult = newsMapper.insertNewsList(news2);
         int deleteResult =  newsMapper.deleteNewsList("NAVER","FINANCE");
-       assertThat(deleteResult).isEqualTo(1);
+       assertThat(deleteResult + insertResult).isEqualTo(2);
     }
 
     @Test
@@ -92,10 +94,10 @@ public class NewsMapperTest {
 
     @Test
     @DisplayName("뉴스리스트 디비 조회 테스트")
-    void getList(){
-        List<ListItem> list = naverNewsCrawlling.getNewsList("NAVER","MAIN");
-        System.out.println(Arrays.toString(list.toArray()));
-        // 토탈 유알엘이 조회가 안된다.
-    }
+    void getList() {
+        List<ListItem> list = naverNewsCrawlling.getNewsList("NAVER", "MAIN")
+                                                .stream().limit(5).collect(Collectors.toList());
+        assertThat(list.size()).isEqualTo(5);
 
+    }
 }

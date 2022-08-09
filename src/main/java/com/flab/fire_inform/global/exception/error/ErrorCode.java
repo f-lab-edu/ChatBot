@@ -14,7 +14,8 @@ public enum ErrorCode {
 
     // 뉴스 헤드라인 조회 관련 에러
     DOMAIN_NOT_FOUND(BAD_REQUEST,"도메인을 선택해주셔야합니다."),
-    COMPANY_NOT_FOUND(BAD_REQUEST,"정확한 회사명을 입력해주세요.")
+    COMPANY_NOT_FOUND(BAD_REQUEST,"정확한 회사명을 입력해주세요."),
+    WRONG_DATASOURCE(BAD_REQUEST,"잘못된 데이터 소스입니다.")
     ;
 
     private final HttpStatus httpStatus;

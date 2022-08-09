@@ -92,10 +92,7 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
                         "> div.cluster > div.cluster_group > div.cluster_head > div.cluster_head_inner > div.cluster_head_topic_wrap > h2.cluster_head_topic > a");
 
             }else{
-
-
                 contents = doc.select("tr > td.content > div.content > div.list_body > ul > li > dl > dt:not(.photo) > a");
-
             }
 
             for (Element content : contents) {
@@ -116,7 +113,6 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
             }
 
             saveNewsList(itemList,url,domain);
-
         }
 
         log.info("[NaverNesCrawllingImpl] :::::: textList ={}", itemList.toString());
@@ -145,6 +141,7 @@ public class NaverNewsCrawllingImpl implements NewsCrawlling {
     }
 
     public List<ListItem> getNewsList(String site,String domain){
+
         List<ListItem> returnList = new ArrayList<>();
         List<News> list = newsMapper.getNewsList(site,domain);
 
