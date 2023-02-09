@@ -22,7 +22,7 @@
 
 ## UI/UX
 
-<img width="260" alt="image" src="https://user-images.githubusercontent.com/66231761/217699438-4ae7f930-5ae9-4464-be95-02795127c078.png">
+<img width="460" alt="image" src="https://user-images.githubusercontent.com/66231761/217699438-4ae7f930-5ae9-4464-be95-02795127c078.png">
 <img width="260" alt="image" src="https://user-images.githubusercontent.com/66231761/217699444-fdb68631-f3da-41ec-9bbc-2740f64b708a.png">
 
 
