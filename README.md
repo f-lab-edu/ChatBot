@@ -29,4 +29,4 @@
 ## 트러블 슈팅 및 학습 기록
 ### Jenkins
 - [Jenkins 설치하기](https://steadycode.tistory.com/82)
-- [enkins Github 연동하기](https://steadycode.tistory.com/87)
+- [Jenkins Github 연동하기](https://steadycode.tistory.com/87)
