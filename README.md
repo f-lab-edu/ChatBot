@@ -1,6 +1,13 @@
 # Recruit & Economy ChatBot
 크롤러를 통해 금일 업데이트된 채용공고와 뉴스 기사를 조회하는 챗봇 애플리케이션입니다.
 
+## Skills
+- java
+- spring
+- myBatis
+- MySQL
+- Jenkins
+
 ## 프로젝트 구조도
 
 <p align="center">
@@ -13,12 +20,11 @@
   <img width="560" alt="스크린샷 2023-02-09 오전 11 01 18" src="https://user-images.githubusercontent.com/66231761/217697859-295d411e-1e12-4dbb-9427-69ad4d235695.png">
  </p>
 
-## 사용 기술
-- java
-- spring
-- myBatis
-- MySQL
-- Jenkins
+## UI/UX
+
+<img width="260" alt="image" src="https://user-images.githubusercontent.com/66231761/217699438-4ae7f930-5ae9-4464-be95-02795127c078.png">
+<img width="260" alt="image" src="https://user-images.githubusercontent.com/66231761/217699444-fdb68631-f3da-41ec-9bbc-2740f64b708a.png">
+
 
 ## 트러블 슈팅 및 학습 기록
 ### Jenkins
