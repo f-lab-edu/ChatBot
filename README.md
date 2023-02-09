@@ -30,3 +30,4 @@
 ### Jenkins
 - [Jenkins 설치하기](https://steadycode.tistory.com/82)
 - [Jenkins Github 연동하기](https://steadycode.tistory.com/87)
+- [원격 Jenkins 서버로 CI/CD 환경 구현하기](https://steadycode.tistory.com/88)
