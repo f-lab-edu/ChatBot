@@ -1,5 +1,8 @@
 package com.flab.fire_inform.domains.recruit.service;
 
+import com.flab.fire_inform.domains.recruit.Company;
+import com.flab.fire_inform.domains.recruit.CompanyFactory;
+import com.flab.fire_inform.domains.recruit.CompanyType;
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
 import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,13 @@ public class RecruitService {
 
     public RecruitService(RecruitMapper recruitMapper) {
         this.recruitMapper = recruitMapper;
+    }
+
+    public List<Recruit> getRecruitsByCompany(String company) {
+        Company companies = CompanyFactory.getCompany(company);
+
+        List<Recruit> recruits = null;
+        return recruits;
     }
 
     public List<Recruit> getAllRecruitsAfterYesterday() {

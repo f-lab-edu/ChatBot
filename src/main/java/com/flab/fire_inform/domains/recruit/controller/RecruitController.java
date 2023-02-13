@@ -21,7 +21,6 @@ public class RecruitController {
 
     private final RecruitService recruitService;
     private final ObjectMapper objectMapper;
-    private final Map<String, String> companies = Map.of("kakao", "카카오", "naver", "네이버");
 
     public RecruitController(RecruitService recruitService, ObjectMapper objectMapper) {
         this.recruitService = recruitService;
@@ -30,12 +29,7 @@ public class RecruitController {
 
     @PostMapping("/api/new-recruits/{company}")
     public CommonResponse getNewRecruitsAfterYesterdayByListCard(@PathVariable(name = "company") String company) {
-        List<Recruit> findRecruits;
-        if(company.equals("all")) {
-            findRecruits = recruitService.getAllRecruitsAfterYesterday();
-        } else {
-            findRecruits = recruitService.getRecruitsByCompanyAfterYesterday(companies.get(company));
-        }
+        List<Recruit> findRecruits = recruitService.getRecruitsByCompany(company);
 
         CommonResponse result;
         if(findRecruits.size() != 0) {
