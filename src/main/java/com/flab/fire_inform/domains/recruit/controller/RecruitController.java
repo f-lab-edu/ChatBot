@@ -1,7 +1,7 @@
 package com.flab.fire_inform.domains.recruit.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flab.fire_inform.domains.recruit.CompanyType;
+import com.flab.fire_inform.domains.recruit.CompanyTypeConverter;
 import com.flab.fire_inform.domains.recruit.dto.CommonResponse;
 import com.flab.fire_inform.domains.recruit.dto.ListCardResponse;
 import com.flab.fire_inform.domains.recruit.dto.SimpleTextResponse;
@@ -13,38 +13,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @Slf4j
 public class RecruitController {
 
     private final RecruitService recruitService;
-    private final ObjectMapper objectMapper;
 
-    public RecruitController(RecruitService recruitService, ObjectMapper objectMapper) {
+    public RecruitController(RecruitService recruitService) {
         this.recruitService = recruitService;
-        this.objectMapper = objectMapper;
     }
 
     @PostMapping("/api/new-recruits/{company}")
     public CommonResponse getNewRecruitsAfterYesterdayByListCard(@PathVariable(name = "company") String company) {
-        List<Recruit> findRecruits = recruitService.getRecruitsByCompany(company);
+        CompanyType companyType = CompanyTypeConverter.from(company);
+        List<Recruit> findRecruits = recruitService.getRecruitsByCompany(companyType);
+        return parseToChatBotTemplate(findRecruits);
+    }
 
-        CommonResponse result;
+    private CommonResponse parseToChatBotTemplate(List<Recruit> findRecruits) {
         if(findRecruits.size() != 0) {
-            result = ListCardResponse.of(findRecruits);
+            return ListCardResponse.of(findRecruits);
         } else {
-            result = SimpleTextResponse.empty();
+            return SimpleTextResponse.empty();
         }
-
-        try {
-            String resultJson = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
-            log.info(resultJson);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return result;
     }
 }

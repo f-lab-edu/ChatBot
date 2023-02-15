@@ -2,22 +2,32 @@ package com.flab.fire_inform.domains.recruit;
 
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
 import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Naver implements Company {
+@Component
+public class Naver implements CompanyCondition {
 
-    private final CompanyType companyType;
+    private final RecruitMapper recruitMapper;
 
-    public Naver(CompanyType companyType) {
-        this.companyType = companyType;
+    public Naver(RecruitMapper recruitMapper) {
+        this.recruitMapper = recruitMapper;
     }
 
     @Override
-    public CompanyType getCompanyType() {
-        return companyType;
+    public Boolean isSatisfiedBy(CompanyType companyType) {
+        return companyType == CompanyType.NAVER;
+    }
+
+    @Override
+    public List<Recruit> getRecruitsByCondition() {
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+
+        return recruitMapper.findByCompany(CompanyType.NAVER.getValue()).stream()
+                .filter(d -> d.getAddDateTime().isAfter(yesterday))
+                .collect(Collectors.toList());
     }
 }
