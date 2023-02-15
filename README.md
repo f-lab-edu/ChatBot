@@ -33,3 +33,5 @@
 - [원격 Jenkins 서버로 CI/CD 환경 구현하기](https://steadycode.tistory.com/88)
 ### 카카오 챗봇
 - [카카오 챗봇 응답 템플릿 작성하기](https://steadycode.tistory.com/89)
+### 객체지향
+- [과도한 if 절 타입 분기 코드 개선하기](https://steadycode.tistory.com/90)
