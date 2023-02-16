@@ -12,9 +12,10 @@ import java.util.Map;
 @Getter
 @Slf4j
 public class ListCardResponse implements CommonResponse {
+
     private final String version;
     private final Template template;
-    private static final Map<String, String> logoUrlMap = Map.of("카카오", "https://t1.kakaocdn.net/kakaocorp/corp_thumbnail/Kakao.png", "네이버", "https://blog.kakaocdn.net/dn/XEAGa/btqB10c0bQ1/RZk86MYViwrP4OaBdpfhn0/img.png");
+    private static final Map<String, String> logoUrlMap = Map.of("kakao", "https://t1.kakaocdn.net/kakaocorp/corp_thumbnail/Kakao.png", "naver", "https://blog.kakaocdn.net/dn/XEAGa/btqB10c0bQ1/RZk86MYViwrP4OaBdpfhn0/img.png");
 
     private ListCardResponse(String version, Template template) {
         this.version = version;
