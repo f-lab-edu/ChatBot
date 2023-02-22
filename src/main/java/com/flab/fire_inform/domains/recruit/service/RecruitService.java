@@ -3,14 +3,8 @@ package com.flab.fire_inform.domains.recruit.service;
 import com.flab.fire_inform.domains.recruit.CompanyCondition;
 import com.flab.fire_inform.domains.recruit.CompanyType;
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
-import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class RecruitService {
@@ -23,7 +17,7 @@ public class RecruitService {
 
     public List<Recruit> getRecruitsByCompany(CompanyType companyType) {
         return companyConditions.stream()
-                .filter(companyCondition -> companyCondition.isSatisfiedBy(companyType))
-                .findFirst().get().getRecruitsByCondition();
+            .filter(companyCondition -> companyCondition.isSatisfiedBy(companyType))
+            .findFirst().get().getRecruitsByCondition();
     }
 }

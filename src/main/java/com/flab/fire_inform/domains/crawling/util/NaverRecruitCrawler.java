@@ -2,6 +2,9 @@ package com.flab.fire_inform.domains.crawling.util;
 
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
 import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,13 +12,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
 @Slf4j
-public class NaverRecruitCrawler implements JobCrawler{
+public class NaverRecruitCrawler implements JobCrawler {
 
     private final RecruitMapper recruitMapper;
 
@@ -68,12 +67,15 @@ public class NaverRecruitCrawler implements JobCrawler{
             try {
                 Document document = Jsoup.connect(recruitDetailLink).get();
                 String title = document.select("h4[class=card_title]").get(0).text();
-                String career = document.select("dt:contains(모집 경력)[class=blind] + dd[class=info_text]").get(0).text();
-                String duringDate = document.select("dt:contains(모집 기간)[class=blind] + dd[class=info_text]").get(0).text();
+                String career = document.select(
+                    "dt:contains(모집 경력)[class=blind] + dd[class=info_text]").get(0).text();
+                String duringDate = document.select(
+                    "dt:contains(모집 기간)[class=blind] + dd[class=info_text]").get(0).text();
                 String dueDate = duringDate.split(" ")[2];
                 String company = "네이버";
                 String address = null;
-                String workerType = document.select("dt:contains(모집 경력)[class=blind] + dd[class=info_text]").get(0).text();
+                String workerType = document.select(
+                    "dt:contains(모집 경력)[class=blind] + dd[class=info_text]").get(0).text();
 
                 log.info("title: {}", title);
                 log.info("career: {}", career);
@@ -84,10 +86,10 @@ public class NaverRecruitCrawler implements JobCrawler{
                 log.info("");
 
                 result.add(new Recruit.Builder(title, company, recruitDetailLink)
-                        .career(career)
-                        .dueDate(dueDate)
-                        .workerType(workerType)
-                        .build());
+                    .career(career)
+                    .dueDate(dueDate)
+                    .workerType(workerType)
+                    .build());
             } catch (IOException e) {
                 e.printStackTrace();
             }

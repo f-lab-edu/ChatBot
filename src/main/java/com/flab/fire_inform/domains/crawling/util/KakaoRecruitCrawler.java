@@ -2,17 +2,16 @@ package com.flab.fire_inform.domains.crawling.util;
 
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
 import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Component
@@ -64,19 +63,20 @@ public class KakaoRecruitCrawler implements JobCrawler {
         }
     }
 
-    private void deduplicate(List<Recruit> recruits, List<Recruit> findRecruits, List<Recruit> recruitsToAdd, List<Recruit> recruitsToUpdate) {
+    private void deduplicate(List<Recruit> recruits, List<Recruit> findRecruits,
+        List<Recruit> recruitsToAdd, List<Recruit> recruitsToUpdate) {
         for (Recruit recruit : recruits) {
             boolean isAlreadyIn = false;
             String title = recruit.getTitle();
             for (Recruit findRecruit : findRecruits) {
-                if(title.equals(findRecruit.getTitle())) {
+                if (title.equals(findRecruit.getTitle())) {
                     recruit.setId(findRecruit.getId());
                     isAlreadyIn = true;
                     break;
                 }
             }
 
-            if(!isAlreadyIn) {
+            if (!isAlreadyIn) {
                 recruitsToAdd.add(recruit);
             } else {
                 recruitsToUpdate.add(recruit);
@@ -85,14 +85,16 @@ public class KakaoRecruitCrawler implements JobCrawler {
     }
 
 
-    private void crawlRecruitDetail(String kakaoUrl, List<Recruit> recruits, List<String> recruitLinks) throws IOException {
+    private void crawlRecruitDetail(String kakaoUrl, List<Recruit> recruits,
+        List<String> recruitLinks) throws IOException {
         Document doc;
         for (String recruitLink : recruitLinks) {
             log.info("-------- Recruit --------");
             String link = kakaoUrl + recruitLink;
 
             doc = Jsoup.connect(link).get();
-            String title = Objects.requireNonNull(doc.getElementsByClass("tit_jobs").first()).text();
+            String title = Objects.requireNonNull(doc.getElementsByClass("tit_jobs").first())
+                .text();
 
             String company = null;
             String workerType = null;
@@ -130,15 +132,16 @@ public class KakaoRecruitCrawler implements JobCrawler {
             log.info("link : {}", link);
 
             recruits.add(new Recruit.Builder(title, company, link)
-                    .career(career)
-                    .dueDate(dueDate)
-                    .address(address)
-                    .workerType(workerType)
-                    .build());
+                .career(career)
+                .dueDate(dueDate)
+                .address(address)
+                .workerType(workerType)
+                .build());
         }
     }
 
-    private List<String> getRecruitLinks(int totalPage, int currentPage, String url) throws IOException {
+    private List<String> getRecruitLinks(int totalPage, int currentPage, String url)
+        throws IOException {
         Document doc;
         List<String> recruitLinks = new ArrayList<>();
         while (currentPage <= totalPage) {
@@ -156,9 +159,11 @@ public class KakaoRecruitCrawler implements JobCrawler {
 
     private int getTotalPage(String kakaoUrl) throws IOException {
         Document document = Jsoup.connect(kakaoUrl + "/jobs?page=1").get();
-        String lastPageUrl = Objects.requireNonNull(document.getElementsByClass("change_page btn_lst").first()).attr("href");
+        String lastPageUrl = Objects.requireNonNull(
+            document.getElementsByClass("change_page btn_lst").first()).attr("href");
         int indexOfTotalPage = lastPageUrl.indexOf("page=") + 5;
-        int totalPage = Integer.parseInt(lastPageUrl.substring(indexOfTotalPage, indexOfTotalPage + 1));
+        int totalPage = Integer.parseInt(
+            lastPageUrl.substring(indexOfTotalPage, indexOfTotalPage + 1));
         log.info("totalPage : {}", totalPage);
         return totalPage;
     }

@@ -3,6 +3,7 @@ package com.flab.fire_inform.domains.recruit;
 import java.security.InvalidParameterException;
 
 public class CompanyTypeConverter {
+
     public static CompanyType from(String company) {
         switch (company) {
             case "all":

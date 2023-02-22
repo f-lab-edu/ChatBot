@@ -13,17 +13,20 @@ public enum EconomyNewsUrl {
     LIFE("https://news.naver.com/main/list.naver?mode=LS2D&mid=shm&sid1=101&sid2=310"),
     ORDINARY("https://news.naver.com/main/list.naver?mode=LS2D&mid=shm&sid1=101&sid2=263");
     private final String url;
-    EconomyNewsUrl(String url){
-        this.url =url;
+
+    EconomyNewsUrl(String url) {
+        this.url = url;
     }
-    public String getUrl(){
+
+    public String getUrl() {
         return url;
     }
+
     public static EconomyNewsUrl valueOfLabel(String url) {
         return Arrays.stream(values())
-                .filter(value -> value.url.equals(url))
-                .findAny()
-                .orElse(null);
+            .filter(value -> value.url.equals(url))
+            .findAny()
+            .orElse(null);
     }
 
 }

@@ -6,6 +6,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class StockInformation {
+
     private final String name;
     private final String price;
     private final String date;
@@ -21,38 +22,41 @@ public class StockInformation {
         this.url = stockBuilder.url;
     }
 
-    public static StockBuilder builder(String name, String price){
+    public static StockBuilder builder(String name, String price) {
         return new StockBuilder(name, price);
     }
 
-    public static class StockBuilder{
+    public static class StockBuilder {
+
         private final String name;
         private final String price;
-        private  String date;
-        private  String howDifferenttWithYesterday;
+        private String date;
+        private String howDifferenttWithYesterday;
 
         private String url;
-        public StockBuilder(String name, String price){
+
+        public StockBuilder(String name, String price) {
             this.name = name;
             this.price = price;
         }
 
-        public StockBuilder date(String date){
+        public StockBuilder date(String date) {
             this.date = date;
             return this;
         }
 
-        public StockBuilder howDifferenttWithYesterday(String howDifferenttWithYesterday){
+        public StockBuilder howDifferenttWithYesterday(String howDifferenttWithYesterday) {
             this.howDifferenttWithYesterday = howDifferenttWithYesterday;
             return this;
         }
-        public StockBuilder url(String url){
+
+        public StockBuilder url(String url) {
             this.url = url;
             return this;
         }
 
 
-        public StockInformation build(){
+        public StockInformation build() {
             return new StockInformation(this);
         }
     }

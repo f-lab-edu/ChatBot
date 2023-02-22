@@ -8,6 +8,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 public class SkillResponse {
+
     private String version;
     private SkillTemplate template;
 }
