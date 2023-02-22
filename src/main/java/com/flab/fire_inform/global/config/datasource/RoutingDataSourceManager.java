@@ -1,8 +1,9 @@
 package com.flab.fire_inform.global.config.datasource;
 
-import static com.flab.fire_inform.global.config.datasource.SetDataSource.*;
+import static com.flab.fire_inform.global.config.datasource.SetDataSource.DataSourceType;
 
 public class RoutingDataSourceManager {
+
     // 현재 커넥션은 기본적으로 ThreaLocal에 저장해서 사용한다.
     private static final ThreadLocal<DataSourceType> currentDataSourceName = new ThreadLocal<>();
 

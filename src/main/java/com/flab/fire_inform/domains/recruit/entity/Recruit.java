@@ -1,16 +1,16 @@
 package com.flab.fire_inform.domains.recruit.entity;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.ibatis.type.Alias;
-
-import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Getter
 @Alias("recruit")
 @ToString
 public class Recruit {
+
     private Long id;
     private String title;
     private String career;
@@ -22,9 +22,12 @@ public class Recruit {
     private LocalDateTime addDateTime;
     private LocalDateTime updateDateTime;
 
-    public Recruit() {}
+    public Recruit() {
+    }
 
-    protected Recruit(Long id, String title, String career, String dueDate, String company, String address, String workerType, String link, LocalDateTime addDateTime, LocalDateTime updateDateTime) {
+    protected Recruit(Long id, String title, String career, String dueDate, String company,
+        String address, String workerType, String link, LocalDateTime addDateTime,
+        LocalDateTime updateDateTime) {
         this.id = id;
         this.title = title;
         this.career = career;
@@ -55,32 +58,51 @@ public class Recruit {
     }
 
     public boolean equals(final Object o) {
-        if (o == this) return true;
-        if (!(o instanceof Recruit)) return false;
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Recruit)) {
+            return false;
+        }
         final Recruit other = (Recruit) o;
-        if (!other.canEqual(this)) return false;
+        if (!other.canEqual(this)) {
+            return false;
+        }
         final Object this$id = this.getId();
         final Object other$id = other.getId();
-        if (!Objects.equals(this$id, other$id)) return false;
+        if (!Objects.equals(this$id, other$id)) {
+            return false;
+        }
         final Object this$title = this.getTitle();
         final Object other$title = other.getTitle();
-        if (!Objects.equals(this$title, other$title)) return false;
+        if (!Objects.equals(this$title, other$title)) {
+            return false;
+        }
         final Object this$career = this.getCareer();
         final Object other$career = other.getCareer();
-        if (!Objects.equals(this$career, other$career)) return false;
+        if (!Objects.equals(this$career, other$career)) {
+            return false;
+        }
         final Object this$dueDate = this.getDueDate();
         final Object other$dueDate = other.getDueDate();
-        if (!Objects.equals(this$dueDate, other$dueDate)) return false;
+        if (!Objects.equals(this$dueDate, other$dueDate)) {
+            return false;
+        }
         final Object this$company = this.getCompany();
         final Object other$company = other.getCompany();
-        if (!Objects.equals(this$company, other$company)) return false;
+        if (!Objects.equals(this$company, other$company)) {
+            return false;
+        }
         final Object this$address = this.getAddress();
         final Object other$address = other.getAddress();
-        if (!Objects.equals(this$address, other$address)) return false;
+        if (!Objects.equals(this$address, other$address)) {
+            return false;
+        }
         final Object this$workerType = this.getWorkerType();
         final Object other$workerType = other.getWorkerType();
-        if (!Objects.equals(this$workerType, other$workerType))
+        if (!Objects.equals(this$workerType, other$workerType)) {
             return false;
+        }
         final Object this$link = this.getLink();
         final Object other$link = other.getLink();
         return Objects.equals(this$link, other$link);
@@ -117,6 +139,7 @@ public class Recruit {
     }
 
     public static class Builder {
+
         // 필수 매개변수
         private final String title;
         private final String company;

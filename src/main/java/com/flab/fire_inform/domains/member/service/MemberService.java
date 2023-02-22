@@ -14,31 +14,32 @@ import org.springframework.stereotype.Service;
 public class MemberService {
 
     private final MemberMapper memberMapper;
-    public MemberService(MemberMapper memberMapper){
+
+    public MemberService(MemberMapper memberMapper) {
         this.memberMapper = memberMapper;
     }
 
-    public void login(LoginRequest loginRequest){
+    public void login(LoginRequest loginRequest) {
 
         log.info("[MemberMapper] :::: ========= loginRequest  = " + loginRequest);
 
-        if(!memberMapper.login(loginRequest)){
+        if (!memberMapper.login(loginRequest)) {
             throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
         }
         memberMapper.insertLoginTime(loginRequest.getId());
     }
 
-    public void join(JoinRequest joinRequest){
+    public void join(JoinRequest joinRequest) {
 
-        try{
+        try {
             memberMapper.join(joinRequest);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(ErrorCode.JOIN_FAIL);
         }
 
     }
 
-    public boolean idCheck(String id){
+    public boolean idCheck(String id) {
         return memberMapper.checkId(id);
     }
 }

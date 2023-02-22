@@ -13,7 +13,7 @@ public class LoginInterceptorConfiguration implements WebMvcConfigurer {
 
     private final LoginTokenHandler loginTokenHandler;
 
-    public LoginInterceptorConfiguration(LoginTokenHandler loginTokenHandler){
+    public LoginInterceptorConfiguration(LoginTokenHandler loginTokenHandler) {
         this.loginTokenHandler = loginTokenHandler;
     }
 
@@ -21,14 +21,14 @@ public class LoginInterceptorConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginTokenHandler)
-                .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/login")
-                .excludePathPatterns("/api/join")
-                .excludePathPatterns("/api/newsList")
-                .excludePathPatterns("/api/news/*")
-                .excludePathPatterns("/api/news/*/*")
-                .excludePathPatterns("/api/newsList/*")
-                .excludePathPatterns("/api/new-recruits/*")
-                .excludePathPatterns("/api/stock");
+            .addPathPatterns("/api/**")
+            .excludePathPatterns("/api/login")
+            .excludePathPatterns("/api/join")
+            .excludePathPatterns("/api/newsList")
+            .excludePathPatterns("/api/news/*")
+            .excludePathPatterns("/api/news/*/*")
+            .excludePathPatterns("/api/newsList/*")
+            .excludePathPatterns("/api/new-recruits/*")
+            .excludePathPatterns("/api/stock");
     }
 }
