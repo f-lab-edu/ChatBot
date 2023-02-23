@@ -2,12 +2,13 @@ package com.flab.fire_inform.global.exception.error;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
-    //고객 관련 에러
+    // 고객 관련 에러
     INVALID_TOKEN(BAD_REQUEST, "토큰이 유효하지 않습니다."),
     REFRESH_TOKEN_NOT_FOUND(BAD_REQUEST, "토큰이 유효하지 않습니다."),
     MEMBER_NOT_FOUND(NOT_FOUND, "아이디와 비밀번호를 확인하세요."),
@@ -18,7 +19,11 @@ public enum ErrorCode {
     // 뉴스 헤드라인 조회 관련 에러
     DOMAIN_NOT_FOUND(BAD_REQUEST, "도메인을 선택해주셔야합니다."),
     COMPANY_NOT_FOUND(BAD_REQUEST, "정확한 회사명을 입력해주세요."),
-    WRONG_DATASOURCE(BAD_REQUEST, "잘못된 데이터 소스입니다.");
+    WRONG_DATASOURCE(BAD_REQUEST, "잘못된 데이터 소스입니다."),
+
+    // job crawler
+    INVALID_URL(INTERNAL_SERVER_ERROR, "Invalid kakao url"),
+    PARSE_INVALID_ELEMENT(INTERNAL_SERVER_ERROR, "Parsing Invalid Element");
 
     private final HttpStatus httpStatus;
     private final String detail;
