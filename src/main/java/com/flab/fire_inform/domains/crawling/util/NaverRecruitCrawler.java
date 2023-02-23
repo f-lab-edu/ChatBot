@@ -1,7 +1,10 @@
 package com.flab.fire_inform.domains.crawling.util;
 
+import com.flab.fire_inform.domains.crawling.exception.ElementParseException;
+import com.flab.fire_inform.domains.crawling.exception.InvalidUrlException;
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
 import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
+import com.flab.fire_inform.global.exception.error.ErrorCode;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +44,12 @@ public class NaverRecruitCrawler implements JobCrawler {
     private List<String> getRecruitDetailLinks(String listUrl) {
         List<String> urls = new ArrayList<>();
         String detailUrl = "https://recruit.navercorp.com/rcrt/view.do?annoId=";
+        Document document;
 
         try {
-            Document document = Jsoup.connect(listUrl).get();
+            document = Jsoup.connect(listUrl).get();
             Elements elements = document.select("a[class=card_link]");
+
             for (Element element : elements) {
                 String annoId = element.attr("onclick");
                 annoId = annoId.replace("show('", "");
@@ -53,10 +58,10 @@ public class NaverRecruitCrawler implements JobCrawler {
                 urls.add(detailUrl + annoId);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new InvalidUrlException(ErrorCode.INVALID_URL);
+        } catch (Exception e) {
+            throw new ElementParseException(ErrorCode.PARSE_INVALID_ELEMENT);
         }
-
-        log.info("");
 
         return urls;
     }
@@ -91,7 +96,9 @@ public class NaverRecruitCrawler implements JobCrawler {
                     .workerType(workerType)
                     .build());
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new InvalidUrlException(ErrorCode.INVALID_URL);
+            } catch (Exception e) {
+                throw new ElementParseException(ErrorCode.PARSE_INVALID_ELEMENT);
             }
         }
 
