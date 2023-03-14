@@ -4,7 +4,7 @@ import com.flab.fire_inform.global.exception.error.ErrorCode;
 
 public class ElementParseException extends JobCrawlerException {
 
-    public ElementParseException(ErrorCode errorCode) {
-        super(errorCode);
+    public ElementParseException() {
+        super(ErrorCode.PARSE_INVALID_ELEMENT);
     }
 }

@@ -4,7 +4,7 @@ import com.flab.fire_inform.global.exception.error.ErrorCode;
 
 public class InvalidUrlException extends JobCrawlerException {
 
-    public InvalidUrlException(ErrorCode errorCode) {
-        super(errorCode);
+    public InvalidUrlException() {
+        super(ErrorCode.INVALID_URL);
     }
 }
