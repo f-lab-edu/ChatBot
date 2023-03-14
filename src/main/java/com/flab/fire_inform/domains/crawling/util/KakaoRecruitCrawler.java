@@ -2,110 +2,103 @@ package com.flab.fire_inform.domains.crawling.util;
 
 import com.flab.fire_inform.domains.crawling.exception.ElementParseException;
 import com.flab.fire_inform.domains.crawling.exception.InvalidUrlException;
+import com.flab.fire_inform.domains.recruit.CompanyType;
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
+import com.flab.fire_inform.domains.recruit.entity.Recruit.Builder;
 import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
-import com.flab.fire_inform.global.exception.error.ErrorCode;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.InvalidArgumentException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
 public class KakaoRecruitCrawler implements JobCrawler {
 
     private final RecruitMapper recruitMapper;
+    private static final String KAKAO_URL = "https://careers.kakao.com/jobs";
 
     public KakaoRecruitCrawler(RecruitMapper recruitMapper) {
         this.recruitMapper = recruitMapper;
     }
 
     @Override
+    @Transactional
     public void crawling() {
-        try {
-            log.info("================== Kakao Recruits Crawling Start ===================");
-            String kakaoUrl = "https://careers.kakao.com";
+        log.info("================== Kakao Recruits Crawling Start ===================");
 
-            int totalPage = getTotalPage(kakaoUrl);
+        WebDriver webDriver = runWebDriver();
 
-            int currentPage = 1;
-            String url = kakaoUrl + "/jobs?page=";
-            List<Recruit> recruits = new ArrayList<>();
+        List<String> recruitDetailLinks = getRecruitLinks(webDriver);
 
-            List<String> recruitLinks = getRecruitLinks(totalPage, currentPage, url);
+        List<Recruit> recruits = parseLinkToRecruit(webDriver, recruitDetailLinks);
 
-            crawlRecruitDetail(kakaoUrl, recruits, recruitLinks);
+        List<Recruit> recruitsToAdd = deduplicate(recruits);
 
-            List<Recruit> findRecruits = recruitMapper.findByCompany("카카오");
-
-            List<Recruit> recruitsToAdd = new ArrayList<>();
-            List<Recruit> recruitsToUpdate = new ArrayList<>();
-            deduplicate(recruits, findRecruits, recruitsToAdd, recruitsToUpdate);
-
-            log.info("recruitsToAdd.size = {}", recruitsToAdd.size());
-            log.info("recruitsToUpdate.size = {}", recruitsToUpdate.size());
-
-            for (Recruit recruit : recruitsToAdd) {
-                recruitMapper.save(recruit);
-            }
-
-            for (Recruit recruit : recruitsToUpdate) {
-                recruitMapper.update(recruit);
-            }
-        } catch (IOException e) {
-            throw new InvalidUrlException(ErrorCode.INVALID_URL);
-        } catch (Exception e) {
-            throw new ElementParseException(ErrorCode.PARSE_INVALID_ELEMENT);
+        for (Recruit recruit : recruitsToAdd) {
+            recruitMapper.save(recruit);
         }
+
+        webDriver.quit();
+
         log.info("================== Kakao Recruits Crawling End =====================");
     }
 
-    private void deduplicate(List<Recruit> recruits, List<Recruit> findRecruits,
-        List<Recruit> recruitsToAdd, List<Recruit> recruitsToUpdate) {
-        for (Recruit recruit : recruits) {
-            boolean isAlreadyIn = false;
-            String title = recruit.getTitle();
-            for (Recruit findRecruit : findRecruits) {
-                if (title.equals(findRecruit.getTitle())) {
-                    recruit.setId(findRecruit.getId());
-                    isAlreadyIn = true;
-                    break;
-                }
-            }
+    private WebDriver runWebDriver() {
+        // WebDriver 경로 설정
+        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 
-            if (!isAlreadyIn) {
-                recruitsToAdd.add(recruit);
-            } else {
-                recruitsToUpdate.add(recruit);
-            }
-        }
+        // WebDriver option
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");          // 최대크기로
+        options.addArguments("--headless");                 // Browser를 띄우지 않음
+        options.addArguments(
+            "--disable-gpu");              // GPU를 사용하지 않음, Linux에서 headless를 사용하는 경우 필요함.
+        options.addArguments(
+            "--no-sandbox");               // Sandbox 프로세스를 사용하지 않음, Linux에서 headless를 사용하는 경우 필요함.
+        options.addArguments("--disable-popup-blocking");    // 팝업 무시
+        options.addArguments("--disable-default-apps");     // 기본앱 사용안함
+
+        return new ChromeDriver(options);
     }
 
+    private List<Recruit> deduplicate(List<Recruit> recruits) {
+        List<Recruit> findRecruits = recruitMapper.findByCompany(CompanyType.KAKAO.getValue());
 
-    private void crawlRecruitDetail(String kakaoUrl, List<Recruit> recruits,
-        List<String> recruitLinks) throws IOException {
-        Document doc;
-        for (String recruitLink : recruitLinks) {
-            log.info("-------- Recruit --------");
-            String link = kakaoUrl + recruitLink;
+        Set<Recruit> recruitsSet = new HashSet<>(recruits);
+        Set<Recruit> findRecruitsSet = new HashSet<>(findRecruits);
+
+        recruitsSet.removeAll(findRecruitsSet);
+
+        return new ArrayList<>(recruitsSet);
+    }
+
+    private List<Recruit> parseLinkToRecruit(WebDriver webDriver, List<String> recruitDetailLinks) {
+        List<Recruit> result = new ArrayList<>();
+
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        for (String link : recruitDetailLinks) {
 
             try {
-                doc = Jsoup.connect(link).get();
-                String title = Objects.requireNonNull(doc.getElementsByClass("tit_jobs").first())
-                    .text();
+                webDriver.get(link);
 
-                String company = null;
-                String workerType = null;
-                String dueDate = null;
-                String address = null;
+                String title = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//strong[@class='tit_jobs']"))).getText();
+
                 String career = null;
-
                 if (title.contains("신입") && title.contains("경력")) {
                     career = "경력무관";
                 } else if (title.contains("경력")) {
@@ -114,82 +107,74 @@ public class KakaoRecruitCrawler implements JobCrawler {
                     career = "신입";
                 }
 
-                Elements headerKeys = doc.select(".list_info dt");
-                Elements headerValues = doc.select(".list_info dd");
-                for (int i = 0; i < headerKeys.size(); i++) {
-                    if (headerKeys.get(i).text().equals("회사정보")) {
-                        company = headerValues.get(i).text();
-                    } else if (headerKeys.get(i).text().equals("직원유형")) {
-                        workerType = headerValues.get(i).text();
-                    } else if (headerKeys.get(i).text().equals("영입마감일")) {
-                        dueDate = headerValues.get(i).text();
-                    } else if (headerKeys.get(i).text().equals("근무지 정보")) {
-                        address = headerValues.get(i).text();
-                    }
-                }
-                log.info("title : {}", title);
-                log.info("company : {}", company);
-                log.info("career : {}", career);
-                log.info("dueDate : {}", dueDate);
-                log.info("address : {}", address);
-                log.info("workerType : {}", workerType);
-                log.info("link : {}", link);
+                String workerType = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//dl[@class='list_info']/dd[2]"))).getText();
 
-                recruits.add(new Recruit.Builder(title, company, link)
+                String dueDate = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//dl[@class='list_info']/dd[3]"))).getText();
+
+                String address = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//dl[@class='list_info']/dd[4]"))).getText();
+
+                result.add(new Builder(title, CompanyType.KAKAO.getValue(), link)
                     .career(career)
                     .dueDate(dueDate)
-                    .address(address)
                     .workerType(workerType)
+                    .address(address)
                     .build());
-            } catch (IOException e) {
-                throw new InvalidUrlException(ErrorCode.INVALID_URL);
-            } catch (Exception e) {
-                throw new ElementParseException(ErrorCode.PARSE_INVALID_ELEMENT);
+            } catch (InvalidArgumentException e) {
+                webDriver.quit();
+                throw new InvalidUrlException();
+            } catch (WebDriverException e) {
+                webDriver.quit();
+                throw new ElementParseException();
             }
         }
+
+        return result;
     }
 
-    private List<String> getRecruitLinks(int totalPage, int currentPage, String url)
-        throws IOException {
-        Document doc;
-        List<String> recruitLinks = new ArrayList<>();
-        while (currentPage <= totalPage) {
-            String fixedUrl = url + currentPage++;
+    private List<String> getRecruitLinks(WebDriver webDriver) {
+        List<String> result = new ArrayList<>();
+
+        int currentPage = 1;
+
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        while (true) {
+            try {
+                webDriver.get(String.format("%s?page=%d", KAKAO_URL, currentPage));
+
+                wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//*[@id=\"mArticle\"]/div/ul[@class='list_jobs']")));
+            } catch (InvalidArgumentException e) {
+                webDriver.quit();
+                throw new InvalidUrlException();
+            } catch (WebDriverException e) {  // 마지막 페이지
+                break;
+            }
 
             try {
-                doc = Jsoup.connect(fixedUrl).get();
-                Elements linkTags = doc.getElementsByClass("link_jobs");
-                for (Element linkTag : linkTags) {
-                    String link = linkTag.attr("href");
-                    recruitLinks.add(link);
+                List<WebElement> webElements = wait.until(
+                    ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                        By.xpath("//ul[@class='list_jobs']/child::a")));
+
+                for (WebElement e : webElements) {
+                    String href = e.getAttribute("href");
+                    if (href == null) {
+                        webDriver.quit();
+                        throw new ElementParseException();
+                    }
+                    result.add(String.format("%s", href));
                 }
-            } catch (IOException e) {
-                throw new InvalidUrlException(ErrorCode.INVALID_URL);
-            } catch (Exception e) {
-                throw new ElementParseException(ErrorCode.PARSE_INVALID_ELEMENT);
+            } catch (WebDriverException e) {
+                webDriver.quit();
+                throw new ElementParseException();
             }
-        }
-        log.info("totalCountOfRecruits : {}", recruitLinks.size());
-        return recruitLinks;
-    }
 
-    private int getTotalPage(String kakaoUrl) throws IOException {
-        int totalPage;
-
-        try {
-            Document document = Jsoup.connect(kakaoUrl + "/jobs?page=1").get();
-            String lastPageUrl = Objects.requireNonNull(
-                document.getElementsByClass("change_page btn_lst").first()).attr("href");
-            int indexOfTotalPage = lastPageUrl.indexOf("page=") + 5;
-            totalPage = Integer.parseInt(
-                lastPageUrl.substring(indexOfTotalPage, indexOfTotalPage + 1));
-        } catch (IOException e) {
-            throw new InvalidUrlException(ErrorCode.INVALID_URL);
-        } catch (Exception e) {
-            throw new ElementParseException(ErrorCode.PARSE_INVALID_ELEMENT);
+            currentPage += 1;
         }
 
-        log.info("totalPage : {}", totalPage);
-        return totalPage;
+        return result;
     }
 }
