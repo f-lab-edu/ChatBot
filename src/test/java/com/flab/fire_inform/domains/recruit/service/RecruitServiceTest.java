@@ -1,4 +1,4 @@
-package com.flab.fire_inform.crawlling.domains.recruit.service;
+package com.flab.fire_inform.domains.recruit.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;

@@ -1,4 +1,4 @@
-package com.flab.fire_inform.crawlling.domains.crawling.util;
+package com.flab.fire_inform.domains.crawling.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,7 +38,7 @@ public class StockCrawlerTest {
             "  }" +
             "}";
         Map<String, Object> prameter = objectMapper.readValue(st,
-            new TypeReference<Map<String, Object>>() {
+            new TypeReference<>() {
             });
         StockInformation stockInformation = stockCrawler.crawling(prameter);
         assertThat("삼성전자").isEqualTo(stockInformation.getName());

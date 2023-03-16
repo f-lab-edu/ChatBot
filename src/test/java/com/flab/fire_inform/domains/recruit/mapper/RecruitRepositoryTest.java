@@ -1,4 +1,4 @@
-package com.flab.fire_inform.crawlling.domains.recruit.mapper;
+package com.flab.fire_inform.domains.recruit.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
