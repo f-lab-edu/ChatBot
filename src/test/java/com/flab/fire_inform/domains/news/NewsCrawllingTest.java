@@ -1,4 +1,4 @@
-package com.flab.fire_inform.crawlling.domains.news;
+package com.flab.fire_inform.domains.news;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,9 +1,8 @@
-package com.flab.fire_inform.crawlling.domains.recruit.mapper;
+package com.flab.fire_inform.domains.recruit.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
-import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
