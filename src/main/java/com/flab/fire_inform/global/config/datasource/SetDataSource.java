@@ -6,13 +6,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
-mapper에서 데이터 소스 선택을 위한 @Annotation
+ * mapper에서 데이터 소스 선택을 위한 @Annotation
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface SetDataSource {
+
     DataSourceType dataSourceType();
-    enum DataSourceType{
+
+    enum DataSourceType {
         MASTER, SLAVE;
     }
 }

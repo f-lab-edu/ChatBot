@@ -1,8 +1,9 @@
+package com.flab.fire_inform.domains.recruit.mapper;
 
-package com.flab.fire_inform.crawlling.domains.recruit.mapper;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.flab.fire_inform.domains.recruit.entity.Recruit;
-import com.flab.fire_inform.domains.recruit.mapper.RecruitMapper;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -10,10 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class RecruitRepositoryTest {
@@ -28,17 +25,17 @@ class RecruitRepositoryTest {
     public void findAllTest() {
         //given
         Recruit recruit1 = new Recruit.Builder("testTitle1", "testCompany1", "testLink1")
-                .address("testAddress1")
-                .career("testCareer1")
-                .dueDate("testDueDate1")
-                .workerType("testWorkerType1")
-                .build();
+            .address("testAddress1")
+            .career("testCareer1")
+            .dueDate("testDueDate1")
+            .workerType("testWorkerType1")
+            .build();
         Recruit recruit2 = new Recruit.Builder("testTitle2", "testCompany2", "testLink2")
-                .address("testAddress2")
-                .career("testCareer2")
-                .dueDate("testDueDate2")
-                .workerType("testWorkerType2")
-                .build();
+            .address("testAddress2")
+            .career("testCareer2")
+            .dueDate("testDueDate2")
+            .workerType("testWorkerType2")
+            .build();
 
         //when
         recruitMapper.save(recruit1);
@@ -56,23 +53,23 @@ class RecruitRepositoryTest {
     public void findByCompanyTest() {
         //given
         Recruit recruit1 = new Recruit.Builder("testTitle1", "testCompany", "testLink1")
-                .address("testAddress1")
-                .career("testCareer1")
-                .dueDate("testDueDate1")
-                .workerType("testWorkerType1")
-                .build();
+            .address("testAddress1")
+            .career("testCareer1")
+            .dueDate("testDueDate1")
+            .workerType("testWorkerType1")
+            .build();
         Recruit recruit2 = new Recruit.Builder("testTitle2", "testCompany", "testLink2")
-                .address("testAddress2")
-                .career("testCareer2")
-                .dueDate("testDueDate2")
-                .workerType("testWorkerType2")
-                .build();
+            .address("testAddress2")
+            .career("testCareer2")
+            .dueDate("testDueDate2")
+            .workerType("testWorkerType2")
+            .build();
         Recruit recruit3 = new Recruit.Builder("testTitle3", "testCompany", "testLink3")
-                .address("testAddress3")
-                .career("testCareer3")
-                .dueDate("testDueDate3")
-                .workerType("testWorkerType3")
-                .build();
+            .address("testAddress3")
+            .career("testCareer3")
+            .dueDate("testDueDate3")
+            .workerType("testWorkerType3")
+            .build();
 
         //when
         recruitMapper.save(recruit1);
@@ -89,11 +86,11 @@ class RecruitRepositoryTest {
     public void findByIdTest() {
         //given
         Recruit recruit = new Recruit.Builder("testTitle", "testCompany", "testLink")
-                .address("testAddress")
-                .career("testCareer")
-                .dueDate("testDueDate")
-                .workerType("testWorkerType")
-                .build();
+            .address("testAddress")
+            .career("testCareer")
+            .dueDate("testDueDate")
+            .workerType("testWorkerType")
+            .build();
 
         //when
         recruitMapper.save(recruit);
@@ -108,11 +105,11 @@ class RecruitRepositoryTest {
     public void saveTest() {
         //given
         Recruit recruit = new Recruit.Builder("testTitle", "testCompany", "testLink")
-                .address("testAddress")
-                .career("testCareer")
-                .dueDate("testDueDate")
-                .workerType("testWorkerType")
-                .build();
+            .address("testAddress")
+            .career("testCareer")
+            .dueDate("testDueDate")
+            .workerType("testWorkerType")
+            .build();
 
         //when
         recruitMapper.save(recruit);
@@ -127,20 +124,20 @@ class RecruitRepositoryTest {
     public void updateTest() {
         //given
         Recruit recruit = new Recruit.Builder("testTitle", "testCompany", "testLink")
-                .address("testAddress")
-                .career("testCareer")
-                .dueDate("testDueDate")
-                .workerType("testWorkerType")
-                .build();
+            .address("testAddress")
+            .career("testCareer")
+            .dueDate("testDueDate")
+            .workerType("testWorkerType")
+            .build();
         recruitMapper.save(recruit);
 
         Recruit updateRecruit = new Recruit.Builder("testTitle2", "testCompany2", "testLink2")
-                .id(recruit.getId())
-                .address("testAddress2")
-                .career("testCareer2")
-                .dueDate("testDueDate2")
-                .workerType("testWorkerType2")
-                .build();
+            .id(recruit.getId())
+            .address("testAddress2")
+            .career("testCareer2")
+            .dueDate("testDueDate2")
+            .workerType("testWorkerType2")
+            .build();
 
         //when
         recruitMapper.update(updateRecruit);
@@ -152,14 +149,14 @@ class RecruitRepositoryTest {
 
     @Test
     @Transactional
-    public void upsertTestWhenFirstRecruit(){
+    public void upsertTestWhenFirstRecruit() {
         //given
         Recruit recruit = new Recruit.Builder("testTitle1", "testCompany1", "testLink1")
-                .address("testAddress1")
-                .career("testCareer1")
-                .dueDate("testDueDate1")
-                .workerType("testWorkerType1")
-                .build();
+            .address("testAddress1")
+            .career("testCareer1")
+            .dueDate("testDueDate1")
+            .workerType("testWorkerType1")
+            .build();
 
         // when
         recruitMapper.upsertRecruits(recruit);
@@ -171,21 +168,21 @@ class RecruitRepositoryTest {
 
     @Test
     @Transactional
-    public void upsertTestWhenDuplicateRecruit(){
+    public void upsertTestWhenDuplicateRecruit() {
         //given
         Recruit recruit1 = new Recruit.Builder("testTitle1", "testCompany1", "testLink1")
-                .address("testAddress1")
-                .career("testCareer1")
-                .dueDate("testDueDate1")
-                .workerType("testWorkerType1")
-                .build();
+            .address("testAddress1")
+            .career("testCareer1")
+            .dueDate("testDueDate1")
+            .workerType("testWorkerType1")
+            .build();
 
         Recruit recruit2 = new Recruit.Builder("testTitle2", "testCompany2", "testLink1")
-                .address("testAddress2")
-                .career("testCareer2")
-                .dueDate("testDueDate2")
-                .workerType("testWorkerType2")
-                .build();
+            .address("testAddress2")
+            .career("testCareer2")
+            .dueDate("testDueDate2")
+            .workerType("testWorkerType2")
+            .build();
 
         //when
         recruitMapper.upsertRecruits(recruit1);  // insert
@@ -199,11 +196,11 @@ class RecruitRepositoryTest {
     public void deleteByIdTest() {
         //given
         Recruit recruit = new Recruit.Builder("testTitle", "testCompany", "testLink")
-                .address("testAddress")
-                .career("testCareer")
-                .dueDate("testDueDate")
-                .workerType("testWorkerType")
-                .build();
+            .address("testAddress")
+            .career("testCareer")
+            .dueDate("testDueDate")
+            .workerType("testWorkerType")
+            .build();
         //when
         recruitMapper.save(recruit);
         recruitMapper.deleteById(recruit.getId());
